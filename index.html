@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>공통수학2 공식 정리 · 도형의 방정식 ~ 명제</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Nanum+Myeongjo:wght@700;800&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFCFA; --grid:#E3EBF1; --ink:#1F2A44; --soft:#5B6782;
+  --red:#C8322B; --redbg:#FBECEA; --hl:#FFF1A8; --line:#C9D5DF; --card:#FFFFFF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151B27; --grid:#1E2635; --ink:#E6ECF5; --soft:#9AA6BD;
+    --red:#FF7A70; --redbg:#3A2126; --hl:#5A4F12; --line:#2F3A4E; --card:#1A2130;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151B27; --grid:#1E2635; --ink:#E6ECF5; --soft:#9AA6BD;
+  --red:#FF7A70; --redbg:#3A2126; --hl:#5A4F12; --line:#2F3A4E; --card:#1A2130;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; color:var(--ink); background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  font:16px/1.65 "IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px 80px}
+
+header.hero{padding:56px 0 28px;border-bottom:2px solid var(--ink)}
+.hero h1{font-family:"Nanum Myeongjo",serif;font-weight:800;font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--soft);max-width:60ch}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);margin:0 -20px;padding:10px 20px;display:flex;gap:8px;overflow-x:auto}
+nav.toc a{flex:none;text-decoration:none;color:var(--ink);font-size:.9rem;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--ink)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+h2{font-family:"Nanum Myeongjo",serif;font-weight:800;font-size:1.9rem;margin:56px 0 4px;letter-spacing:-.01em}
+h2 small{display:block;font-family:"IBM Plex Sans KR",sans-serif;font-weight:500;font-size:.95rem;color:var(--soft);margin-top:2px}
+h3{font-size:1.15rem;margin:32px 0 10px;padding-left:10px;border-left:4px solid var(--ink)}
+
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:4px}
+.row{display:grid;grid-template-columns:minmax(120px,170px) minmax(0,1fr);gap:6px 18px;padding:12px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .k{font-weight:500;color:var(--soft);font-size:.93rem;padding-top:3px}
+.row .v{overflow-x:auto}
+@media (max-width:620px){.row{grid-template-columns:1fr}.row .k{padding-top:0}}
+
+/* formula + figure side by side */
+.pair{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px;align-items:start}
+.figs{display:grid;gap:12px}
+@media (max-width:800px){.pair{grid-template-columns:1fr}.figs{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+.fig{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 10px 8px}
+.fig svg{display:block;width:100%;height:auto}
+.fig figcaption{font-size:.85rem;color:var(--soft);text-align:center;margin-top:4px;line-height:1.4}
+.venns{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+
+/* svg drawing tokens */
+svg .ax{stroke:var(--soft);stroke-width:1;fill:none}
+svg .ln{stroke:var(--ink);stroke-width:1.6;fill:none}
+svg .ac{stroke:var(--red);stroke-width:2;fill:none}
+svg .dash{stroke-dasharray:4 4}
+svg .dot{fill:var(--ink)}
+svg .dotr{fill:var(--red)}
+svg .fs{opacity:.28}
+svg .fs *{fill:var(--red);stroke:none}
+svg .gl{stroke:var(--grid);stroke-width:1}
+svg text{fill:var(--ink);font-family:"STIX Two Text","Times New Roman",serif;font-size:13px}
+svg text.i{font-style:italic}
+svg text.s{fill:var(--soft);font-size:11.5px;font-family:"IBM Plex Sans KR",sans-serif}
+svg text.r{fill:var(--red)}
+
+/* math */
+.m{font-family:"STIX Two Text","Times New Roman",serif;font-size:1.12rem;white-space:nowrap;line-height:2.1}
+.m i{font-style:italic}
+.mline{display:block}
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.88em;line-height:1.25;margin:0 .12em}
+.fr>span:first-child{border-bottom:1px solid currentColor;padding:0 .25em}
+.fr>span:last-child{padding:0 .25em}
+.rt{display:inline-flex}
+.rt>span{border-top:1px solid currentColor;padding:0 .12em}
+.note{font-size:.9rem;color:var(--soft);display:block;margin-top:2px;white-space:normal}
+mark{background:var(--hl);color:inherit;padding:0 .15em}
+
+.pen{margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--red);background:var(--redbg);font-size:.93rem}
+.pen b{color:var(--red)}
+
+.tw{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;min-width:460px;font-size:.95rem;background:var(--card)}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 10px;text-align:center;vertical-align:middle}
+table.t th{background:var(--paper);font-weight:500}
+table.t td .m{font-size:1.02rem;line-height:1.6}
+
+/* transformation lab */
+.lab{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px}
+@media (max-width:760px){.lab{grid-template-columns:1fr}}
+.lab svg{width:100%;height:auto;display:block;border:1px solid var(--line);background:var(--paper)}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ctl button{font:inherit;font-size:.9rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ctl .grp{font-size:.82rem;color:var(--soft);width:100%;margin-top:4px}
+.sliders{display:grid;gap:6px;margin:4px 0 12px}
+.sliders label{display:grid;grid-template-columns:5.5em 1fr 2.2em;align-items:center;gap:8px;font-size:.9rem}
+.sliders output{font-family:"STIX Two Text",serif;text-align:right}
+.eq{border-top:1px solid var(--line);padding-top:10px}
+.eq div{display:grid;grid-template-columns:5.5em 1fr;gap:8px;align-items:center;padding:3px 0}
+.eq .lbl{font-size:.85rem;color:var(--soft)}
+.eq .res{color:var(--red);font-weight:600}
+.replay{margin-top:8px}
+
+footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--ink);color:var(--soft);font-size:.88rem}
+
+@media print{
+  body{background:#fff;color:#000;font-size:12px}
+  nav.toc,.lab .ctl,.lab .sliders,.replay{display:none}
+  header.hero{padding-top:0}
+  h2{break-before:page;margin-top:0}
+  .row,.pen,table,.fig,.lab{break-inside:avoid}
+}
+
+/* figure placed right after its concept */
+.row.f{grid-template-columns:minmax(120px,170px) minmax(0,1fr) 240px;align-items:start}
+.row.f>.fig{margin:0}
+@media (max-width:860px){.row.f{grid-template-columns:minmax(120px,170px) minmax(0,1fr)}.row.f>.fig{grid-column:1/-1;max-width:340px}}
+@media (max-width:620px){.row.f{grid-template-columns:1fr}}
+.figline{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:12px}
+.figline .wide{grid-column:1/-1}
+.lab{margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>공통수학2<br>공식 정리</h1>
+  <p>도형의 방정식부터 명제(충분·필요조건)까지. 개념 하나마다 바로 옆에 그림을 붙였고, 빨간 줄은 시험에서 자주 틀리는 포인트.</p>
+</header>
+
+<nav class="toc" aria-label="단원 바로가기">
+  <a href="#coord">평면좌표</a>
+  <a href="#line">직선의 방정식</a>
+  <a href="#circle">원의 방정식</a>
+  <a href="#move">도형의 이동</a>
+  <a href="#set">집합</a>
+  <a href="#prop">명제</a>
+</nav>
+
+<!-- ================= 평면좌표 ================= -->
+<h2 id="coord">평면좌표<small>Ⅰ. 도형의 방정식</small></h2>
+
+<h3>두 점 사이의 거리</h3>
+<div class="sheet">
+  <div class="row"><div class="k">수직선</div><div class="v"><span class="m">AB = |<i>x</i><sub>2</sub> − <i>x</i><sub>1</sub>|</span></div></div>
+  <div class="row f"><div class="k">좌표평면</div><div class="v"><span class="m">AB = √<span class="rt"><span>(<i>x</i><sub>2</sub> − <i>x</i><sub>1</sub>)<sup>2</sup> + (<i>y</i><sub>2</sub> − <i>y</i><sub>1</sub>)<sup>2</sup></span></span></span><span class="note">가로 차이와 세로 차이로 직각삼각형을 만들고 피타고라스 정리</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="두 점 A B와 가로 세로 차이로 만든 직각삼각형">
+      <line class="ax" x1="10" y1="160" x2="230" y2="160"/><line class="ax" x1="30" y1="172" x2="30" y2="8"/>
+      <line class="ln dash" x1="60" y1="130" x2="190" y2="130"/><line class="ln dash" x1="190" y1="130" x2="190" y2="40"/>
+      <line class="ac" x1="60" y1="130" x2="190" y2="40"/>
+      <circle class="dot" cx="60" cy="130" r="3"/><circle class="dot" cx="190" cy="40" r="3"/>
+      <text x="44" y="126">A</text><text x="196" y="38">B</text>
+      <text class="i" x="100" y="148">x₂ − x₁</text><text class="i" x="196" y="92">y₂ − y₁</text><text class="r" x="104" y="80">AB</text>
+    </svg><figcaption>빗변이 AB</figcaption></figure></div>
+  <div class="row"><div class="k">원점과의 거리</div><div class="v"><span class="m">OA = √<span class="rt"><span><i>x</i><sub>1</sub><sup>2</sup> + <i>y</i><sub>1</sub><sup>2</sup></span></span></span></div></div>
+</div>
+
+<h3>선분의 내분점</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">수직선 <i>m</i> : <i>n</i> 내분</div><div class="v"><span class="m">P = <span class="fr"><span><i>mx</i><sub>2</sub> + <i>nx</i><sub>1</sub></span><span><i>m</i> + <i>n</i></span></span></span></div>
+    <figure class="fig"><svg viewBox="0 0 240 90" role="img" aria-label="선분 AB를 m대 n으로 내분하는 점 P">
+      <line class="ln" x1="20" y1="55" x2="220" y2="55"/><line class="ac" x1="20" y1="55" x2="140" y2="55"/>
+      <circle class="dot" cx="20" cy="55" r="3"/><circle class="dotr" cx="140" cy="55" r="4"/><circle class="dot" cx="220" cy="55" r="3"/>
+      <text class="i r" x="76" y="44">m</text><text class="i" x="176" y="44">n</text>
+      <text x="14" y="78">A</text><text class="r" x="135" y="78">P</text><text x="214" y="78">B</text>
+    </svg><figcaption>A 쪽에서 <i>m</i>, B 쪽에서 <i>n</i></figcaption></figure></div>
+  <div class="row f"><div class="k">좌표평면 <i>m</i> : <i>n</i> 내분</div><div class="v"><span class="m">P(<span class="fr"><span><i>mx</i><sub>2</sub> + <i>nx</i><sub>1</sub></span><span><i>m</i> + <i>n</i></span></span>, <span class="fr"><span><i>my</i><sub>2</sub> + <i>ny</i><sub>1</sub></span><span><i>m</i> + <i>n</i></span></span>)</span><span class="note"><i>x</i>좌표, <i>y</i>좌표를 각각 수직선 내분처럼 계산</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 185" role="img" aria-label="좌표평면 위 내분점과 x축 위로 내린 그림자">
+      <line class="ax" x1="10" y1="160" x2="230" y2="160"/><line class="ax" x1="20" y1="172" x2="20" y2="8"/>
+      <line class="ac" x1="40" y1="140" x2="136" y2="80"/><line class="ln" x1="136" y1="80" x2="200" y2="40"/>
+      <line class="ax dash" x1="40" y1="140" x2="40" y2="160"/><line class="ax dash" x1="136" y1="80" x2="136" y2="160"/><line class="ax dash" x1="200" y1="40" x2="200" y2="160"/>
+      <circle class="dot" cx="40" cy="140" r="3"/><circle class="dotr" cx="136" cy="80" r="4"/><circle class="dot" cx="200" cy="40" r="3"/>
+      <text x="26" y="134">A</text><text class="r" x="124" y="72">P</text><text x="204" y="36">B</text>
+      <text class="i r" x="84" y="177">m</text><text class="i" x="164" y="177">n</text>
+    </svg><figcaption><i>x</i>축에 내린 그림자도 <i>m</i> : <i>n</i></figcaption></figure></div>
+  <div class="row"><div class="k">중점</div><div class="v"><span class="m">M(<span class="fr"><span><i>x</i><sub>1</sub> + <i>x</i><sub>2</sub></span><span>2</span></span>, <span class="fr"><span><i>y</i><sub>1</sub> + <i>y</i><sub>2</sub></span><span>2</span></span>)</span><span class="note"><i>m</i> = <i>n</i>인 내분점</span></div></div>
+  <div class="row f"><div class="k">삼각형의 무게중심</div><div class="v"><span class="m">G(<span class="fr"><span><i>x</i><sub>1</sub> + <i>x</i><sub>2</sub> + <i>x</i><sub>3</sub></span><span>3</span></span>, <span class="fr"><span><i>y</i><sub>1</sub> + <i>y</i><sub>2</sub> + <i>y</i><sub>3</sub></span><span>3</span></span>)</span><span class="note">세 중선의 교점. 각 중선을 꼭짓점에서부터 2 : 1로 내분</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="삼각형의 세 중선과 무게중심 G">
+      <polygon class="ln" points="120,15 25,165 215,165"/>
+      <line class="ln dash" x1="25" y1="165" x2="167.5" y2="90"/><line class="ln dash" x1="215" y1="165" x2="72.5" y2="90"/>
+      <line class="ac" x1="120" y1="15" x2="120" y2="165"/><circle class="dotr" cx="120" cy="115" r="4"/>
+      <text class="r" x="128" y="118">G</text><text class="r" x="104" y="70">2</text><text class="r" x="106" y="146">1</text>
+      <text x="114" y="12">A</text><text x="10" y="172">B</text><text x="220" y="172">C</text>
+    </svg><figcaption>꼭짓점 : 중점 쪽 = 2 : 1</figcaption></figure></div>
+</div>
+<div class="pen"><b>순서 주의</b> — <i>m</i>은 <i>x</i><sub>2</sub>(B 쪽)에, <i>n</i>은 <i>x</i><sub>1</sub>(A 쪽)에 곱한다. "엇갈려 곱한다"로 외우기. 외분점은 2022 개정 공통수학2에서 다루지 않는다.</div>
+
+<h3>도형의 성질</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">중선정리 (파푸스)</div><div class="v"><span class="m">AB<sup>2</sup> + AC<sup>2</sup> = 2(AM<sup>2</sup> + BM<sup>2</sup>)</span><span class="note">M은 BC의 중점</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="삼각형 ABC와 BC의 중점 M으로 그은 중선">
+      <polygon class="ln" points="90,20 20,160 220,160"/><line class="ac" x1="90" y1="20" x2="120" y2="160"/><circle class="dotr" cx="120" cy="160" r="3.5"/>
+      <text x="84" y="14">A</text><text x="6" y="168">B</text><text x="224" y="168">C</text><text class="r" x="115" y="176">M</text>
+      <text class="s" x="58" y="175">BM</text><text class="s" x="160" y="175">MC</text>
+    </svg><figcaption>BM = MC, AM이 중선</figcaption></figure></div>
+  <div class="row f"><div class="k">평행사변형 ABCD</div><div class="v"><span class="m"><mark>AC의 중점 = BD의 중점</mark></span><span class="m mline">(<span class="fr"><span><i>x</i><sub>A</sub> + <i>x</i><sub>C</sub></span><span>2</span></span>, <span class="fr"><span><i>y</i><sub>A</sub> + <i>y</i><sub>C</sub></span><span>2</span></span>) = (<span class="fr"><span><i>x</i><sub>B</sub> + <i>x</i><sub>D</sub></span><span>2</span></span>, <span class="fr"><span><i>y</i><sub>B</sub> + <i>y</i><sub>D</sub></span><span>2</span></span>)</span><span class="note">두 대각선이 서로를 이등분 → 좌표로는 A + C = B + D. 세 꼭짓점을 주고 네 번째를 구하는 문제에 사용</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="평행사변형 ABCD의 두 대각선이 중점 M에서 만남">
+      <polygon class="ln" points="30,140 180,140 215,35 65,35"/>
+      <line class="ac" x1="30" y1="140" x2="215" y2="35"/><line class="ln dash" x1="180" y1="140" x2="65" y2="35"/>
+      <line class="ac" x1="72" y1="111" x2="80" y2="121" style="stroke-width:1.4"/><line class="ac" x1="165" y1="54" x2="173" y2="64" style="stroke-width:1.4"/>
+      <circle class="dotr" cx="122.5" cy="87.5" r="4"/>
+      <text x="16" y="154">A</text><text x="184" y="156">B</text><text x="219" y="32">C</text><text x="52" y="30">D</text><text class="r" x="128" y="104">M</text>
+    </svg><figcaption>AM = MC, BM = MD → 중점이 같다</figcaption></figure></div>
+  <div class="row f"><div class="k">삼각형 넓이 (신발끈)</div><div class="v"><span class="m">S = <span class="fr"><span>1</span><span>2</span></span>|(<i>x</i><sub>1</sub><i>y</i><sub>2</sub> + <i>x</i><sub>2</sub><i>y</i><sub>3</sub> + <i>x</i><sub>3</sub><i>y</i><sub>1</sub>) − (<i>x</i><sub>2</sub><i>y</i><sub>1</sub> + <i>x</i><sub>3</sub><i>y</i><sub>2</sub> + <i>x</i><sub>1</sub><i>y</i><sub>3</sub>)|</span><span class="note">서술형에서는 밑변·높이 풀이를 따로 쓰는 게 안전</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 150" role="img" aria-label="신발끈 공식 곱하는 방향">
+      <text class="i" x="84" y="30">x₁</text><text class="i" x="144" y="30">y₁</text>
+      <text class="i" x="84" y="62">x₂</text><text class="i" x="144" y="62">y₂</text>
+      <text class="i" x="84" y="94">x₃</text><text class="i" x="144" y="94">y₃</text>
+      <text class="i" x="84" y="126">x₁</text><text class="i" x="144" y="126">y₁</text>
+      <line class="ac" x1="100" y1="28" x2="140" y2="54"/><line class="ac" x1="100" y1="60" x2="140" y2="86"/><line class="ac" x1="100" y1="92" x2="140" y2="118"/>
+      <line class="ax" x1="140" y1="28" x2="100" y2="54"/><line class="ax" x1="140" y1="60" x2="100" y2="86"/><line class="ax" x1="140" y1="92" x2="100" y2="118"/>
+      <text class="s r" x="176" y="58">↘ 곱은 +</text><text class="s" x="176" y="92">↙ 곱은 −</text>
+    </svg><figcaption>첫 점을 맨 아래에 한 번 더 쓰고 엇갈려 곱하기</figcaption></figure></div>
+</div>
+
+<!-- ================= 직선 ================= -->
+<h2 id="line">직선의 방정식<small>Ⅰ. 도형의 방정식</small></h2>
+
+<h3>직선의 방정식 구하기</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">기울기</div><div class="v"><span class="m"><i>m</i> = <span class="fr"><span><i>y</i><sub>2</sub> − <i>y</i><sub>1</sub></span><span><i>x</i><sub>2</sub> − <i>x</i><sub>1</sub></span></span></span><span class="note">세로 변화량 ÷ 가로 변화량</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="두 점을 지나는 직선의 기울기">
+      <line class="ax" x1="10" y1="165" x2="230" y2="165"/><line class="ax" x1="25" y1="175" x2="25" y2="8"/>
+      <line class="ln" x1="30" y1="158" x2="220" y2="25"/>
+      <line class="ac dash" x1="70" y1="130" x2="170" y2="130"/><line class="ac dash" x1="170" y1="130" x2="170" y2="60"/>
+      <circle class="dot" cx="70" cy="130" r="3"/><circle class="dot" cx="170" cy="60" r="3"/>
+      <text class="i" x="44" y="124">(x₁, y₁)</text><text class="i" x="120" y="52">(x₂, y₂)</text>
+      <text class="i r" x="98" y="148">x₂ − x₁</text><text class="i r" x="176" y="100">y₂ − y₁</text>
+    </svg><figcaption>기울기 = 세로 ÷ 가로</figcaption></figure></div>
+  <div class="row f"><div class="k">한 점과 기울기</div><div class="v"><span class="m"><i>y</i> − <i>y</i><sub>1</sub> = <i>m</i>(<i>x</i> − <i>x</i><sub>1</sub>)</span><span class="note">(<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>)에서 오른쪽으로 1 가면 위로 <i>m</i></span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="한 점을 지나고 기울기가 m인 직선">
+      <line class="ln" x1="20" y1="160" x2="220" y2="0"/>
+      <line class="ac dash" x1="70" y1="120" x2="130" y2="120"/><line class="ac dash" x1="130" y1="120" x2="130" y2="72"/>
+      <circle class="dotr" cx="70" cy="120" r="4"/>
+      <text class="i" x="30" y="140">(x₁, y₁)</text><text class="r" x="96" y="137">1</text><text class="i r" x="136" y="100">m</text>
+    </svg><figcaption>점 하나 + 기울어진 정도 = 직선 하나</figcaption></figure></div>
+  <div class="row"><div class="k">두 점을 지남</div><div class="v"><span class="m"><i>y</i> − <i>y</i><sub>1</sub> = <span class="fr"><span><i>y</i><sub>2</sub> − <i>y</i><sub>1</sub></span><span><i>x</i><sub>2</sub> − <i>x</i><sub>1</sub></span></span>(<i>x</i> − <i>x</i><sub>1</sub>)</span><span class="note">기울기를 먼저 구하고 위 식에 대입. <i>x</i><sub>1</sub> = <i>x</i><sub>2</sub>이면 <i>x</i> = <i>x</i><sub>1</sub> (<i>y</i>축에 평행)</span></div></div>
+  <div class="row f"><div class="k"><i>x</i>절편 <i>a</i>, <i>y</i>절편 <i>b</i></div><div class="v"><span class="m"><span class="fr"><span><i>x</i></span><span><i>a</i></span></span> + <span class="fr"><span><i>y</i></span><span><i>b</i></span></span> = 1</span><span class="note"><i>ab</i> ≠ 0일 때</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="x절편 a와 y절편 b를 지나는 직선">
+      <line class="ax" x1="10" y1="150" x2="230" y2="150"/><line class="ax" x1="40" y1="175" x2="40" y2="8"/>
+      <line class="ln" x1="20" y1="24" x2="215" y2="177"/>
+      <circle class="dotr" cx="180" cy="150" r="3.5"/><circle class="dotr" cx="40" cy="40" r="3.5"/>
+      <text class="i r" x="184" y="144">a</text><text class="i r" x="26" y="36">b</text><text class="i" x="30" y="165">O</text>
+    </svg><figcaption>(<i>a</i>, 0)과 (0, <i>b</i>)를 지남</figcaption></figure></div>
+  <div class="row"><div class="k">일반형</div><div class="v"><span class="m"><i>ax</i> + <i>by</i> + <i>c</i> = 0</span><span class="note"><i>y</i>축에 평행한 직선까지 모든 직선을 표현</span></div></div>
+  <div class="row f"><div class="k">세 점이 한 직선 위</div><div class="v"><span class="m">(AB의 기울기) = (BC의 기울기)</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="한 직선 위의 세 점과 같은 기울기">
+      <line class="ln" x1="20" y1="150" x2="220" y2="30"/>
+      <polyline class="ac dash" points="50,132 120,132 120,90"/><polyline class="ln dash" points="120,90 190,90 190,48"/>
+      <circle class="dot" cx="50" cy="132" r="3"/><circle class="dot" cx="120" cy="90" r="3"/><circle class="dot" cx="190" cy="48" r="3"/>
+      <text x="40" y="124">A</text><text x="106" y="84">B</text><text x="176" y="42">C</text>
+    </svg><figcaption>두 삼각형의 기울기가 같다</figcaption></figure></div>
+</div>
+
+<h3>두 직선의 위치 관계</h3>
+<div class="tw"><table class="t">
+  <tr><th></th><th><span class="m"><i>y</i> = <i>mx</i> + <i>n</i><br><i>y</i> = <i>m</i>′<i>x</i> + <i>n</i>′</span></th><th><span class="m"><i>ax</i> + <i>by</i> + <i>c</i> = 0<br><i>a</i>′<i>x</i> + <i>b</i>′<i>y</i> + <i>c</i>′ = 0</span></th></tr>
+  <tr><th>평행</th><td><span class="m"><i>m</i> = <i>m</i>′, <i>n</i> ≠ <i>n</i>′</span></td><td><span class="m"><span class="fr"><span><i>a</i></span><span><i>a</i>′</span></span> = <span class="fr"><span><i>b</i></span><span><i>b</i>′</span></span> ≠ <span class="fr"><span><i>c</i></span><span><i>c</i>′</span></span></span></td></tr>
+  <tr><th>일치</th><td><span class="m"><i>m</i> = <i>m</i>′, <i>n</i> = <i>n</i>′</span></td><td><span class="m"><span class="fr"><span><i>a</i></span><span><i>a</i>′</span></span> = <span class="fr"><span><i>b</i></span><span><i>b</i>′</span></span> = <span class="fr"><span><i>c</i></span><span><i>c</i>′</span></span></span></td></tr>
+  <tr><th>한 점에서 만남</th><td><span class="m"><i>m</i> ≠ <i>m</i>′</span></td><td><span class="m"><span class="fr"><span><i>a</i></span><span><i>a</i>′</span></span> ≠ <span class="fr"><span><i>b</i></span><span><i>b</i>′</span></span></span></td></tr>
+  <tr><th>수직</th><td><span class="m"><mark><i>mm</i>′ = −1</mark></span></td><td><span class="m"><mark><i>aa</i>′ + <i>bb</i>′ = 0</mark></span></td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="평행한 두 직선과 수직인 두 직선">
+    <line class="ln" x1="15" y1="150" x2="95" y2="52"/><line class="ln" x1="45" y1="160" x2="115" y2="74"/>
+    <line class="ac" x1="135" y1="135" x2="225" y2="45"/><line class="ac" x1="135" y1="45" x2="225" y2="135"/>
+    <polyline class="ac" points="188.5,81.5 197,90 188.5,98.5" style="stroke-width:1.2"/>
+    <text class="s" x="62" y="176" text-anchor="middle">평행: 기울기 같음</text><text class="s r" x="180" y="176" text-anchor="middle">수직: 곱 = −1</text>
+  </svg><figcaption>위 표를 그림으로</figcaption></figure>
+</div>
+<div class="sheet" style="margin-top:12px">
+  <div class="row f"><div class="k">수직이등분선</div><div class="v"><span class="m">AB의 중점을 지나고 기울기 −<span class="fr"><span>1</span><span><i>m</i><sub>AB</sub></span></span></span><span class="note">이 직선 위의 점 P는 PA = PB</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 190" role="img" aria-label="선분 AB의 수직이등분선과 그 위의 점 P">
+      <line class="ln" x1="40" y1="130" x2="200" y2="70"/>
+      <line class="ac" x1="88.4" y1="15.8" x2="151.6" y2="184.2"/>
+      <polyline class="ac" points="128.4,96.8 125.2,88.4 116.8,91.6" style="stroke-width:1.2"/>
+      <line class="ax dash" x1="98.9" y1="43.8" x2="40" y2="130"/><line class="ax dash" x1="98.9" y1="43.8" x2="200" y2="70"/>
+      <circle class="dot" cx="40" cy="130" r="3"/><circle class="dot" cx="200" cy="70" r="3"/><circle class="dotr" cx="120" cy="100" r="3.5"/><circle class="dot" cx="98.9" cy="43.8" r="3"/>
+      <text x="26" y="140">A</text><text x="204" y="68">B</text><text class="r" x="126" y="116">M</text><text x="80" y="40">P</text>
+    </svg><figcaption>중점 M을 지나며 AB에 수직</figcaption></figure></div>
+</div>
+
+<h3>정점을 지나는 직선</h3>
+<div class="sheet">
+  <div class="row"><div class="k">두 직선의 교점을 지나는 직선</div><div class="v"><span class="m">(<i>ax</i> + <i>by</i> + <i>c</i>) + <i>k</i>(<i>a</i>′<i>x</i> + <i>b</i>′<i>y</i> + <i>c</i>′) = 0</span><span class="note">두 번째 직선 자체는 이 꼴로 표현되지 않음</span></div></div>
+  <div class="row f"><div class="k"><i>k</i>에 관계없이 지나는 점</div><div class="v"><span class="m">(식) + <i>k</i>(식) = 0 으로 정리 → 두 식 = 0 연립</span><span class="note"><i>k</i>가 바뀌면 직선이 한 점을 중심으로 빙글 돈다</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="한 정점을 지나는 여러 직선">
+      <line class="ln" x1="20" y1="60" x2="220" y2="120"/><line class="ln" x1="20" y1="140" x2="220" y2="40"/>
+      <line class="ln" x1="60" y1="6" x2="180" y2="174"/><line class="ax" x1="20" y1="110" x2="220" y2="70"/>
+      <circle class="dotr" cx="120" cy="90" r="5"/><text class="s r" x="130" y="112">정점</text>
+    </svg><figcaption>모든 직선이 지나는 점 = 정점</figcaption></figure></div>
+</div>
+
+<h3>점과 직선 사이의 거리</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">점 (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>)과 직선</div><div class="v"><span class="m"><i>d</i> = <span class="fr"><span>|<i>ax</i><sub>1</sub> + <i>by</i><sub>1</sub> + <i>c</i>|</span><span>√<span class="rt"><span><i>a</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span></span></span></span><span class="note">직선 <i>ax</i> + <i>by</i> + <i>c</i> = 0 에 수선을 내린 길이</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="점 P에서 직선에 내린 수선의 길이 d">
+      <line class="ln" x1="15" y1="150" x2="225" y2="40"/><line class="ac" x1="70" y1="40" x2="103.3" y2="103.7"/>
+      <circle class="dot" cx="70" cy="40" r="3.5"/><text x="54" y="36">P</text><text class="i r" x="92" y="66">d</text>
+      <text class="i s" x="150" y="104">ax + by + c = 0</text>
+    </svg><figcaption>가장 짧은 거리 = 수선의 길이</figcaption></figure></div>
+  <div class="row f"><div class="k">평행한 두 직선</div><div class="v"><span class="m"><i>d</i> = <span class="fr"><span>|<i>c</i> − <i>c</i>′|</span><span>√<span class="rt"><span><i>a</i><sup>2</sup> + <i>b</i><sup>2</sup></span></span></span></span></span><span class="note"><i>x</i>, <i>y</i> 계수를 먼저 같게 맞출 것. 한 직선 위의 아무 점에서 다른 직선까지 거리와 같다</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 185" role="img" aria-label="평행한 두 직선 사이의 거리">
+      <line class="ln" x1="15" y1="130" x2="225" y2="20"/><line class="ln" x1="15" y1="170" x2="225" y2="60"/>
+      <line class="ac" x1="100" y1="85.5" x2="116.4" y2="116.9"/><circle class="dot" cx="100" cy="85.5" r="3"/>
+      <text class="i r" x="116" y="98">d</text>
+    </svg><figcaption>어디서 재도 거리가 같다</figcaption></figure></div>
+  <div class="row f"><div class="k">각의 이등분선</div><div class="v"><span class="m">두 직선까지의 거리가 같은 점의 자취</span><span class="note">절댓값을 풀면 직선이 2개 (서로 수직)</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="두 직선과 각의 이등분선 두 개">
+      <line class="ln" x1="20" y1="140" x2="220" y2="40"/><line class="ln" x1="20" y1="40" x2="220" y2="140"/>
+      <line class="ac dash" x1="20" y1="90" x2="220" y2="90"/><line class="ac dash" x1="120" y1="10" x2="120" y2="170"/>
+      <line class="ax" x1="190" y1="90" x2="176" y2="62"/><line class="ax" x1="190" y1="90" x2="176" y2="118"/>
+      <circle class="dot" cx="190" cy="90" r="3"/><text x="196" y="86">P</text>
+    </svg><figcaption>빨간 점선 2개가 이등분선</figcaption></figure></div>
+</div>
+<div class="pen"><b>자주 틀림</b> — <i>y</i> = 2<i>x</i> + 3처럼 주어지면 2<i>x</i> − <i>y</i> + 3 = 0 일반형으로 바꾼 뒤 대입.</div>
+
+<!-- ================= 원 ================= -->
+<h2 id="circle">원의 방정식<small>Ⅰ. 도형의 방정식</small></h2>
+
+<h3>원의 방정식</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">표준형</div><div class="v"><span class="m">(<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> = <i>r</i><sup>2</sup></span><span class="note">중심 (<i>a</i>, <i>b</i>), 반지름 <i>r</i></span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="중심 a b 반지름 r인 원">
+      <line class="ax" x1="10" y1="160" x2="230" y2="160"/><line class="ax" x1="30" y1="172" x2="30" y2="8"/>
+      <circle class="ln" cx="130" cy="85" r="50"/>
+      <line class="ax dash" x1="130" y1="85" x2="130" y2="160"/><line class="ax dash" x1="30" y1="85" x2="130" y2="85"/>
+      <line class="ac" x1="130" y1="85" x2="180" y2="85"/><circle class="dot" cx="130" cy="85" r="3"/>
+      <text class="i r" x="150" y="79">r</text><text class="i" x="126" y="175">a</text><text class="i" x="18" y="89">b</text>
+    </svg><figcaption>중심에서 거리가 <i>r</i>인 점들</figcaption></figure></div>
+  <div class="row"><div class="k">일반형</div><div class="v"><span class="m"><i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>Ax</i> + <i>By</i> + <i>C</i> = 0</span><span class="note">원이 될 조건 <mark><i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> − 4<i>C</i> &gt; 0</mark> · 완전제곱식으로 바꿔 중심·반지름 확인</span></div></div>
+  <div class="row f"><div class="k">지름의 양 끝 A, B</div><div class="v"><span class="m">(<i>x</i> − <i>x</i><sub>1</sub>)(<i>x</i> − <i>x</i><sub>2</sub>) + (<i>y</i> − <i>y</i><sub>1</sub>)(<i>y</i> − <i>y</i><sub>2</sub>) = 0</span><span class="note">원 위의 점 P에 대해 ∠APB = 90°라서 나오는 식. 또는 중점 = 중심, AB의 절반 = 반지름</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="지름 AB와 원 위의 점 P에서 직각">
+      <circle class="ln" cx="120" cy="95" r="60"/><line class="ln" x1="60" y1="95" x2="180" y2="95"/>
+      <line class="ac" x1="150" y1="43" x2="60" y2="95"/><line class="ac" x1="150" y1="43" x2="180" y2="95"/>
+      <polyline class="ac" points="142.2,47.5 146.7,55.3 154.5,50.8" style="stroke-width:1.2"/>
+      <circle class="dot" cx="60" cy="95" r="3"/><circle class="dot" cx="180" cy="95" r="3"/><circle class="dotr" cx="150" cy="43" r="3.5"/>
+      <text x="44" y="100">A</text><text x="186" y="100">B</text><text class="r" x="152" y="36">P</text>
+    </svg><figcaption>지름 위 원주각 = 90°</figcaption></figure></div>
+  <div class="row"><div class="k">세 점을 지나는 원</div><div class="v"><span class="m">일반형에 세 점 대입 → <i>A</i>, <i>B</i>, <i>C</i> 연립</span></div></div>
+</div>
+
+<h3>좌표축에 접하는 원</h3>
+<div class="sheet">
+  <div class="row f"><div class="k"><i>x</i>축에 접함</div><div class="v"><span class="m">(<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> = <i>b</i><sup>2</sup></span><span class="note">반지름 = |중심의 <i>y</i>좌표|</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="x축에 접하는 원">
+      <line class="ax" x1="10" y1="150" x2="230" y2="150"/><line class="ax" x1="30" y1="162" x2="30" y2="8"/>
+      <circle class="ln" cx="120" cy="95" r="55"/><line class="ac" x1="120" y1="95" x2="120" y2="150"/>
+      <circle class="dot" cx="120" cy="95" r="3"/><circle class="dotr" cx="120" cy="150" r="3.5"/>
+      <text class="i r" x="126" y="128">r = |b|</text><text class="i" x="104" y="88">(a, b)</text>
+    </svg><figcaption>중심 높이 = 반지름</figcaption></figure></div>
+  <div class="row f"><div class="k"><i>y</i>축에 접함</div><div class="v"><span class="m">(<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> = <i>a</i><sup>2</sup></span><span class="note">반지름 = |중심의 <i>x</i>좌표|</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="y축에 접하는 원">
+      <line class="ax" x1="10" y1="160" x2="230" y2="160"/><line class="ax" x1="30" y1="170" x2="30" y2="8"/>
+      <circle class="ln" cx="95" cy="85" r="65"/><line class="ac" x1="95" y1="85" x2="30" y2="85"/>
+      <circle class="dot" cx="95" cy="85" r="3"/><circle class="dotr" cx="30" cy="85" r="3.5"/>
+      <text class="i r" x="44" y="78">r = |a|</text><text class="i" x="100" y="100">(a, b)</text>
+    </svg><figcaption>중심 가로 거리 = 반지름</figcaption></figure></div>
+  <div class="row f"><div class="k">두 축에 모두 접함</div><div class="v"><span class="m">|<i>a</i>| = |<i>b</i>| = <i>r</i></span><span class="note">중심이 있는 사분면으로 부호 결정. 제1사분면이면 (<i>x</i> − <i>r</i>)<sup>2</sup> + (<i>y</i> − <i>r</i>)<sup>2</sup> = <i>r</i><sup>2</sup></span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="x축 y축에 모두 접하는 원">
+      <line class="ax" x1="10" y1="150" x2="230" y2="150"/><line class="ax" x1="40" y1="162" x2="40" y2="8"/>
+      <circle class="ln" cx="100" cy="90" r="60"/>
+      <line class="ac" x1="100" y1="90" x2="40" y2="90"/><line class="ac" x1="100" y1="90" x2="100" y2="150"/>
+      <circle class="dot" cx="100" cy="90" r="3"/>
+      <text class="i r" x="64" y="84">r</text><text class="i r" x="106" y="126">r</text><text class="i" x="106" y="84">(r, r)</text>
+    </svg><figcaption>가로 거리 = 세로 거리 = <i>r</i></figcaption></figure></div>
+</div>
+
+<h3>원과 직선의 위치 관계</h3>
+<div class="tw"><table class="t">
+  <tr><th></th><th>판별식 (연립 → 이차방정식)</th><th>중심~직선 거리 <span class="m"><i>d</i></span></th></tr>
+  <tr><th>두 점에서 만남</th><td><span class="m"><i>D</i> &gt; 0</span></td><td><span class="m"><i>d</i> &lt; <i>r</i></span></td></tr>
+  <tr><th>접함</th><td><span class="m"><i>D</i> = 0</span></td><td><span class="m"><i>d</i> = <i>r</i></span></td></tr>
+  <tr><th>만나지 않음</th><td><span class="m"><i>D</i> &lt; 0</span></td><td><span class="m"><i>d</i> &gt; <i>r</i></span></td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig"><svg viewBox="0 0 260 160" role="img" aria-label="원과 세 직선의 위치 관계">
+    <circle class="ln" cx="70" cy="105" r="45"/><circle class="dot" cx="70" cy="105" r="2.5"/>
+    <line class="ln" x1="10" y1="85" x2="150" y2="85"/><line class="ac" x1="10" y1="60" x2="150" y2="60"/><line class="ax" x1="10" y1="35" x2="150" y2="35"/>
+    <text class="s" x="156" y="89">d &lt; r 두 점</text><text class="s r" x="156" y="64">d = r 접함</text><text class="s" x="156" y="39">d &gt; r 안 만남</text>
+  </svg><figcaption>위 표를 그림으로</figcaption></figure>
+</div>
+<div class="sheet" style="margin-top:12px">
+  <div class="row f"><div class="k">현의 길이</div><div class="v"><span class="m"><i>l</i> = 2√<span class="rt"><span><i>r</i><sup>2</sup> − <i>d</i><sup>2</sup></span></span></span><span class="note">중심에서 현에 내린 수선은 현을 이등분</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 160" role="img" aria-label="현의 길이와 중심에서 현까지 거리">
+      <circle class="ln" cx="110" cy="80" r="60"/><circle class="dot" cx="110" cy="80" r="2.5"/>
+      <line class="ac" x1="61.3" y1="115" x2="158.7" y2="115"/><line class="ln dash" x1="110" y1="80" x2="110" y2="115"/><line class="ln" x1="110" y1="80" x2="158.7" y2="115"/>
+      <text class="i" x="98" y="103">d</text><text class="i" x="138" y="92">r</text><text class="i r" x="124" y="132">l/2</text>
+    </svg><figcaption>(<i>l</i>/2)² + <i>d</i>² = <i>r</i>²</figcaption></figure></div>
+  <div class="row f"><div class="k">원 위의 점 ↔ 직선</div><div class="v"><span class="m">최댓값 <i>d</i> + <i>r</i>, 최솟값 <i>d</i> − <i>r</i></span><span class="note">원과 직선이 만나지 않을 때 (만나면 최솟값 0)</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 170" role="img" aria-label="원 위의 점과 직선 사이 거리의 최대 최소">
+      <line class="ln" x1="10" y1="25" x2="250" y2="25"/>
+      <circle class="ln" cx="120" cy="110" r="45"/><circle class="dot" cx="120" cy="110" r="2.5"/>
+      <line class="ax dash" x1="120" y1="65" x2="120" y2="155"/>
+      <line class="ac" x1="120" y1="25" x2="120" y2="65"/><circle class="dotr" cx="120" cy="65" r="3"/>
+      <line class="ln" x1="190" y1="25" x2="190" y2="155"/><line class="ax dash" x1="120" y1="155" x2="190" y2="155"/><circle class="dot" cx="120" cy="155" r="3"/>
+      <text class="s r" x="126" y="50">d − r</text><text class="s" x="196" y="95">d + r</text>
+    </svg><figcaption>중심을 지나는 수선 위에서 최대·최소</figcaption></figure></div>
+  <div class="row f"><div class="k">원 밖의 점 P ↔ 원 위의 점</div><div class="v"><span class="m">최대 PC + <i>r</i>, 최소 PC − <i>r</i></span><span class="note">C는 원의 중심</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 160" role="img" aria-label="원 밖의 점과 원 위의 점 사이 거리의 최대 최소">
+      <circle class="ln" cx="90" cy="80" r="45"/><circle class="dot" cx="90" cy="80" r="2.5"/>
+      <line class="ax dash" x1="45" y1="80" x2="135" y2="80"/><line class="ac" x1="135" y1="80" x2="215" y2="80"/>
+      <line class="ln" x1="45" y1="140" x2="215" y2="140"/><line class="ln" x1="45" y1="134" x2="45" y2="146"/><line class="ln" x1="215" y1="134" x2="215" y2="146"/>
+      <circle class="dot" cx="215" cy="80" r="3"/><circle class="dotr" cx="135" cy="80" r="3"/>
+      <text x="220" y="76">P</text><text x="84" y="74">C</text><text class="s r" x="150" y="72">PC − r</text><text class="s" x="112" y="156">PC + r</text>
+    </svg><figcaption>P와 중심을 잇는 직선 위에서 최대·최소</figcaption></figure></div>
+</div>
+
+<h3>원의 접선</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">기울기 <i>m</i>인 접선<span class="note">원 <i>x</i><sup>2</sup>+<i>y</i><sup>2</sup>=<i>r</i><sup>2</sup></span></div><div class="v"><span class="m"><i>y</i> = <i>mx</i> ± <i>r</i>√<span class="rt"><span><i>m</i><sup>2</sup> + 1</span></span></span><span class="note">같은 기울기의 접선은 양쪽에 2개</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="기울기가 같은 두 접선">
+      <circle class="ln" cx="120" cy="90" r="50"/><circle class="dot" cx="120" cy="90" r="2.5"/>
+      <line class="ac" x1="51.4" y1="189.4" x2="240" y2="76.4"/><line class="ac" x1="0" y1="103.6" x2="188.6" y2="-9.4"/>
+      <circle class="dotr" cx="145.7" cy="132.9" r="3"/><circle class="dotr" cx="94.3" cy="47.1" r="3"/>
+    </svg><figcaption>± 가 두 접선을 뜻한다</figcaption></figure></div>
+  <div class="row f"><div class="k">원 위의 점 (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>)에서<span class="note">원 <i>x</i><sup>2</sup>+<i>y</i><sup>2</sup>=<i>r</i><sup>2</sup></span></div><div class="v"><span class="m"><mark><i>x</i><sub>1</sub><i>x</i> + <i>y</i><sub>1</sub><i>y</i> = <i>r</i><sup>2</sup></mark></span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="원 위의 점 T에서의 접선은 반지름과 수직">
+      <circle class="ln" cx="100" cy="100" r="55"/><circle class="dot" cx="100" cy="100" r="2.5"/>
+      <line class="ln" x1="100" y1="100" x2="138.9" y2="61.1"/><line class="ac" x1="82.3" y1="4.5" x2="195.5" y2="117.7"/>
+      <polyline class="ln" points="131.8,68.2 138.9,75.2 146,68.2" style="stroke-width:1.1"/><circle class="dotr" cx="138.9" cy="61.1" r="3.5"/>
+      <text x="86" y="116">O</text><text class="i" x="112" y="90">r</text><text class="i r" x="144" y="56">T(x₁, y₁)</text>
+    </svg><figcaption>접선 ⊥ 반지름</figcaption></figure></div>
+  <div class="row"><div class="k">중심이 (<i>a</i>, <i>b</i>)일 때</div><div class="v"><span class="m">(<i>x</i><sub>1</sub> − <i>a</i>)(<i>x</i> − <i>a</i>) + (<i>y</i><sub>1</sub> − <i>b</i>)(<i>y</i> − <i>b</i>) = <i>r</i><sup>2</sup></span><span class="note">또는 "접선 ⊥ 반지름" → 기울기 곱 −1</span></div></div>
+  <div class="row f"><div class="k">원 밖의 점에서 그은 접선</div><div class="v"><span class="m"><i>y</i> − <i>y</i><sub>1</sub> = <i>m</i>(<i>x</i> − <i>x</i><sub>1</sub>)로 놓고 <i>d</i> = <i>r</i></span><span class="note">접선은 2개. 기울기 없는 접선 <i>x</i> = <i>x</i><sub>1</sub> 빠뜨리지 말 것</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="원 밖의 점 P에서 그은 두 접선">
+      <circle class="ln" cx="80" cy="90" r="45"/><circle class="dot" cx="80" cy="90" r="2.5"/>
+      <line class="ac" x1="210" y1="90" x2="85" y2="44"/><line class="ac" x1="210" y1="90" x2="85" y2="136"/>
+      <line class="ax dash" x1="80" y1="90" x2="95.6" y2="47.8"/><line class="ax dash" x1="80" y1="90" x2="95.6" y2="132.2"/>
+      <circle class="dot" cx="210" cy="90" r="3"/><text x="214" y="86">P</text><text x="66" y="95">C</text>
+    </svg><figcaption>P에서 접선은 항상 2개</figcaption></figure></div>
+  <div class="row f"><div class="k">접선의 길이</div><div class="v"><span class="m">PT = √<span class="rt"><span>PC<sup>2</sup> − <i>r</i><sup>2</sup></span></span></span><span class="note">C는 중심, T는 접점. △PTC는 직각삼각형</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="접선의 길이 직각삼각형">
+      <circle class="ln" cx="70" cy="120" r="50"/>
+      <line class="ln" x1="70" y1="120" x2="87.9" y2="73.3"/><line class="ac" x1="87.9" y1="73.3" x2="210" y2="120"/><line class="ax dash" x1="70" y1="120" x2="210" y2="120"/>
+      <polyline class="ln" points="84.7,81.7 93.1,84.9 96.3,76.5" style="stroke-width:1.1"/>
+      <circle class="dot" cx="70" cy="120" r="2.5"/><circle class="dot" cx="210" cy="120" r="3"/>
+      <text x="56" y="126">C</text><text x="82" y="66">T</text><text x="214" y="124">P</text>
+      <text class="i" x="64" y="96">r</text><text class="r" x="148" y="88">PT</text><text class="s" x="134" y="136">PC</text>
+    </svg><figcaption>PT² + <i>r</i>² = PC²</figcaption></figure></div>
+</div>
+
+<h3>두 원</h3>
+<div class="sheet">
+  <div class="row"><div class="k">교점을 지나는 원</div><div class="v"><span class="m">(<i>x</i><sup>2</sup>+<i>y</i><sup>2</sup>+<i>Ax</i>+<i>By</i>+<i>C</i>) + <i>k</i>(<i>x</i><sup>2</sup>+<i>y</i><sup>2</sup>+<i>A</i>′<i>x</i>+<i>B</i>′<i>y</i>+<i>C</i>′) = 0</span><span class="note"><i>k</i> ≠ −1</span></div></div>
+  <div class="row f"><div class="k">공통현의 방정식</div><div class="v"><span class="m">(<i>A</i> − <i>A</i>′)<i>x</i> + (<i>B</i> − <i>B</i>′)<i>y</i> + (<i>C</i> − <i>C</i>′) = 0</span><span class="note">두 원의 식을 빼면 끝 (<i>k</i> = −1). 공통현 ⊥ 두 중심을 잇는 선</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="두 원과 공통현">
+      <circle class="ln" cx="95" cy="90" r="55"/><circle class="ln" cx="160" cy="90" r="45"/>
+      <line class="ax dash" x1="95" y1="90" x2="160" y2="90"/><circle class="dot" cx="95" cy="90" r="2.5"/><circle class="dot" cx="160" cy="90" r="2.5"/>
+      <line class="ac" x1="135.2" y1="52.5" x2="135.2" y2="127.5"/><text class="i" x="108" y="104">d</text><text class="s r" x="112" y="168">공통현</text>
+    </svg><figcaption>두 식을 빼면 공통현</figcaption></figure></div>
+  <div class="row f"><div class="k">공통외접선 길이</div><div class="v"><span class="m"><i>l</i> = √<span class="rt"><span><i>d</i><sup>2</sup> − (<i>r</i> − <i>r</i>′)<sup>2</sup></span></span></span><span class="note"><i>r</i> = 큰 원 반지름, <i>r</i>′ = 작은 원 반지름, <i>d</i> = 중심 거리<br>작은 원 중심에서 접선과 평행한 선(빨간 점선)을 그으면 직각삼각형: <i>l</i><sup>2</sup> + (<i>r</i> − <i>r</i>′)<sup>2</sup> = <i>d</i><sup>2</sup></span></div>
+    <figure class="fig"><svg viewBox="0 28 240 128" role="img" aria-label="공통외접선과 반지름 r r프라임, 직각삼각형">
+      <circle class="ln" cx="75" cy="95" r="50"/><circle class="ln" cx="195" cy="95" r="22"/>
+      <line class="ax dash" x1="75" y1="95" x2="195" y2="95"/>
+      <line class="ln" x1="75" y1="95" x2="81.5" y2="67.8"/><line class="ln" x1="81.5" y1="67.8" x2="86.7" y2="46.4" style="stroke-dasharray:3 3"/>
+      <line class="ln" x1="195" y1="95" x2="200.1" y2="73.6"/>
+      <line class="ac" x1="86.7" y1="46.4" x2="200.1" y2="73.6"/>
+      <line class="ac dash" x1="81.5" y1="67.8" x2="195" y2="95" style="stroke-width:1.4"/>
+      <polyline class="ln" points="94.5,48.3 92.6,56.1 84.8,54.2" style="stroke-width:1.1"/>
+      <polyline class="ln" points="193.3,72.0 191.7,78.8 198.5,80.4" style="stroke-width:1.1"/>
+      <polyline class="ac" points="88.3,69.4 86.7,76.2 79.9,74.6" style="stroke-width:1.1"/>
+      <circle class="dot" cx="75" cy="95" r="2.5"/><circle class="dot" cx="195" cy="95" r="2.5"/>
+      <circle class="dotr" cx="86.7" cy="46.4" r="3"/><circle class="dotr" cx="200.1" cy="73.6" r="3"/>
+      <line class="ln" x1="75" y1="95" x2="39.6" y2="130.4"/><text class="i" x="44" y="112">r</text><text class="i" x="70" y="62">r′</text><text class="i" x="40" y="88">r − r′</text>
+      <text class="i" x="204" y="90">r′</text><text class="i r" x="140" y="54">l</text><text class="i" x="132" y="110">d</text>
+    </svg><figcaption>큰 원 반지름 <i>r</i>을 <i>r</i>′ 과 <i>r</i> − <i>r</i>′로 나눠 본 그림</figcaption></figure></div>
+  <div class="row f"><div class="k">공통내접선 길이</div><div class="v"><span class="m"><i>l</i> = √<span class="rt"><span><i>d</i><sup>2</sup> − (<i>r</i> + <i>r</i>′)<sup>2</sup></span></span></span><span class="note"><i>r</i> = 큰 원 반지름, <i>r</i>′ = 작은 원 반지름, <i>d</i> = 중심 거리<br>큰 원 반지름을 <i>r</i>′ 만큼 늘린 뒤 평행선(빨간 점선)을 그으면 직각삼각형: <i>l</i><sup>2</sup> + (<i>r</i> + <i>r</i>′)<sup>2</sup> = <i>d</i><sup>2</sup></span></div>
+    <figure class="fig"><svg viewBox="0 24 240 132" role="img" aria-label="공통내접선과 반지름 r r프라임, 직각삼각형">
+      <circle class="ln" cx="75" cy="95" r="50"/><circle class="ln" cx="195" cy="95" r="22"/>
+      <line class="ax dash" x1="75" y1="95" x2="195" y2="95"/>
+      <line class="ln" x1="75" y1="95" x2="105" y2="55"/><line class="ln" x1="105" y1="55" x2="118.2" y2="37.4" style="stroke-dasharray:3 3"/>
+      <line class="ln" x1="195" y1="95" x2="181.8" y2="112.6"/>
+      <line class="ac" x1="105" y1="55" x2="181.8" y2="112.6"/>
+      <line class="ac dash" x1="118.2" y1="37.4" x2="195" y2="95" style="stroke-width:1.4"/>
+      <polyline class="ln" points="111.4,59.8 106.6,66.2 100.2,61.4" style="stroke-width:1.1"/>
+      <polyline class="ln" points="176.2,108.4 180.4,102.8 186,107" style="stroke-width:1.1"/>
+      <polyline class="ac" points="123.8,41.6 119.6,47.2 114,43" style="stroke-width:1.1"/>
+      <circle class="dot" cx="75" cy="95" r="2.5"/><circle class="dot" cx="195" cy="95" r="2.5"/>
+      <circle class="dotr" cx="105" cy="55" r="3"/><circle class="dotr" cx="181.8" cy="112.6" r="3"/>
+      <text class="i" x="76" y="70">r</text><text class="i" x="98" y="42">r′</text>
+      <text class="i" x="192" y="118">r′</text><text class="i r" x="128" y="80">l</text><text class="i" x="112" y="110">d</text>
+    </svg><figcaption>큰 원 반지름 <i>r</i>에 <i>r</i>′를 이어 붙여 <i>r</i> + <i>r</i>′</figcaption></figure></div>
+</div>
+<div class="tw" style="margin-top:12px"><table class="t">
+  <tr><th>위치 관계</th><th>조건 (<span class="m"><i>d</i></span> = 중심 거리, <span class="m"><i>r</i> &gt; <i>r</i>′</span>)</th><th>교점</th></tr>
+  <tr><td>외부에 있음</td><td><span class="m"><i>d</i> &gt; <i>r</i> + <i>r</i>′</span></td><td>0</td></tr>
+  <tr><td>외접</td><td><span class="m"><i>d</i> = <i>r</i> + <i>r</i>′</span></td><td>1</td></tr>
+  <tr><td>두 점에서 만남</td><td><span class="m"><i>r</i> − <i>r</i>′ &lt; <i>d</i> &lt; <i>r</i> + <i>r</i>′</span></td><td>2</td></tr>
+  <tr><td>내접</td><td><span class="m"><i>d</i> = <i>r</i> − <i>r</i>′</span></td><td>1</td></tr>
+  <tr><td>내부에 있음</td><td><span class="m"><i>d</i> &lt; <i>r</i> − <i>r</i>′</span></td><td>0</td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig wide"><svg viewBox="0 0 500 110" role="img" aria-label="두 원의 다섯 가지 위치 관계">
+    <circle class="ln" cx="30" cy="50" r="18"/><circle class="ac" cx="72" cy="50" r="12"/>
+    <circle class="ln" cx="138" cy="50" r="18"/><circle class="ac" cx="168" cy="50" r="12"/>
+    <circle class="ln" cx="242" cy="50" r="18"/><circle class="ac" cx="262" cy="50" r="12"/>
+    <circle class="ln" cx="350" cy="50" r="24"/><circle class="ac" cx="362" cy="50" r="12"/>
+    <circle class="ln" cx="450" cy="50" r="24"/><circle class="ac" cx="454" cy="50" r="10"/>
+    <text class="s" x="50" y="100" text-anchor="middle">외부</text><text class="s" x="150" y="100" text-anchor="middle">외접</text>
+    <text class="s" x="250" y="100" text-anchor="middle">두 점</text><text class="s" x="350" y="100" text-anchor="middle">내접</text><text class="s" x="450" y="100" text-anchor="middle">내부</text>
+  </svg><figcaption>위 표를 그림으로 — 중심 거리 <i>d</i>가 줄어드는 순서</figcaption></figure>
+</div>
+<div class="pen"><b>자취 문제</b> — 구하는 점을 P(<i>x</i>, <i>y</i>)로 두고 조건을 식으로 정리. 두 점 A, B에서 거리의 비가 <i>m</i> : <i>n</i> (<i>m</i> ≠ <i>n</i>)인 점의 자취는 원 (아폴로니오스의 원).</div>
+
+<!-- ================= 도형의 이동 ================= -->
+<h2 id="move">도형의 이동<small>Ⅰ. 도형의 방정식</small></h2>
+
+<h3>평행이동 — <i>x</i>축으로 <i>a</i>, <i>y</i>축으로 <i>b</i></h3>
+<div class="sheet">
+  <div class="row f"><div class="k">점</div><div class="v"><span class="m">(<i>x</i>, <i>y</i>) → (<i>x</i> + <i>a</i>, <i>y</i> + <i>b</i>)</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="점의 평행이동">
+      <line class="ax" x1="10" y1="150" x2="230" y2="150"/><line class="ax" x1="25" y1="162" x2="25" y2="8"/>
+      <line class="ln dash" x1="70" y1="120" x2="170" y2="120"/><line class="ln dash" x1="170" y1="120" x2="170" y2="50"/>
+      <line class="ac" x1="70" y1="120" x2="170" y2="50"/><polyline class="ac" points="157,52 170,50 165,62"/>
+      <circle class="dot" cx="70" cy="120" r="3.5"/><circle class="dotr" cx="170" cy="50" r="4"/>
+      <text x="54" y="116">P</text><text class="r" x="176" y="46">P′</text>
+      <text class="i" x="112" y="136">+a</text><text class="i" x="176" y="90">+b</text>
+    </svg><figcaption>점은 그대로 더한다</figcaption></figure></div>
+  <div class="row f"><div class="k">도형 <i>f</i>(<i>x</i>, <i>y</i>) = 0</div><div class="v"><span class="m"><i>f</i>(<mark><i>x</i> − <i>a</i></mark>, <mark><i>y</i> − <i>b</i></mark>) = 0</span><span class="note">원은 중심만 옮기면 빠르다 (반지름 그대로)</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 170" role="img" aria-label="원의 평행이동">
+      <circle class="ln dash" cx="75" cy="115" r="30"/><circle class="ac" cx="170" cy="60" r="30"/>
+      <line class="ax" x1="75" y1="115" x2="170" y2="60"/><polyline class="ax" points="158,63 170,60 164,71"/>
+      <circle class="dot" cx="75" cy="115" r="2.5"/><circle class="dotr" cx="170" cy="60" r="3"/>
+    </svg><figcaption>모양·크기 그대로, 위치만 이동</figcaption></figure></div>
+</div>
+<div class="pen"><b>부호 반대</b> — 점은 (<i>x</i> + <i>a</i>, <i>y</i> + <i>b</i>)로 더하지만, 도형의 식에는 <i>x</i> 대신 <i>x</i> − <i>a</i>를 넣는다.</div>
+
+<h3>대칭이동</h3>
+<div class="tw"><table class="t">
+  <tr><th>대칭 기준</th><th>점 (<span class="m"><i>x</i>, <i>y</i></span>) →</th><th>도형 <span class="m"><i>f</i>(<i>x</i>, <i>y</i>) = 0</span> →</th><th>한 줄 요약</th></tr>
+  <tr><td><span class="m"><i>x</i></span>축</td><td><span class="m">(<i>x</i>, −<i>y</i>)</span></td><td><span class="m"><i>f</i>(<i>x</i>, −<i>y</i>) = 0</span></td><td><i>y</i>만 부호 반대</td></tr>
+  <tr><td><span class="m"><i>y</i></span>축</td><td><span class="m">(−<i>x</i>, <i>y</i>)</span></td><td><span class="m"><i>f</i>(−<i>x</i>, <i>y</i>) = 0</span></td><td><i>x</i>만 부호 반대</td></tr>
+  <tr><td>원점</td><td><span class="m">(−<i>x</i>, −<i>y</i>)</span></td><td><span class="m"><i>f</i>(−<i>x</i>, −<i>y</i>) = 0</span></td><td>둘 다 부호 반대</td></tr>
+  <tr><td>직선 <span class="m"><i>y</i> = <i>x</i></span></td><td><span class="m">(<i>y</i>, <i>x</i>)</span></td><td><span class="m"><i>f</i>(<i>y</i>, <i>x</i>) = 0</span></td><td>자리 바꾸기</td></tr>
+  <tr><td>직선 <span class="m"><i>y</i> = −<i>x</i></span></td><td><span class="m">(−<i>y</i>, −<i>x</i>)</span></td><td><span class="m"><i>f</i>(−<i>y</i>, −<i>x</i>) = 0</span></td><td>바꾸고 둘 다 부호 반대</td></tr>
+  <tr><td>점 (<span class="m"><i>a</i>, <i>b</i></span>)</td><td><span class="m">(2<i>a</i> − <i>x</i>, 2<i>b</i> − <i>y</i>)</span></td><td><span class="m"><i>f</i>(2<i>a</i> − <i>x</i>, 2<i>b</i> − <i>y</i>) = 0</span></td><td>(<i>a</i>, <i>b</i>)가 중점</td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig"><svg viewBox="0 0 260 200" role="img" aria-label="점 P(2,1)의 여러 대칭이동">
+    <line class="ax" x1="10" y1="100" x2="250" y2="100"/><line class="ax" x1="130" y1="190" x2="130" y2="8"/>
+    <line class="ax dash" x1="40" y1="190" x2="220" y2="10"/><line class="ax dash" x1="40" y1="10" x2="220" y2="190"/>
+    <circle class="dot" cx="190" cy="70" r="4"/>
+    <circle class="dotr" cx="190" cy="130" r="3.5"/><circle class="dotr" cx="70" cy="70" r="3.5"/><circle class="dotr" cx="70" cy="130" r="3.5"/><circle class="dotr" cx="160" cy="40" r="3.5"/><circle class="dotr" cx="100" cy="160" r="3.5"/>
+    <text x="198" y="68">P(2, 1)</text>
+    <text class="s r" x="198" y="138">x축</text><text class="s r" x="40" y="66">y축</text><text class="s r" x="36" y="142">원점</text>
+    <text class="s r" x="166" y="36">y=x</text><text class="s r" x="106" y="176">y=−x</text>
+    <text class="s i" x="222" y="22">y = x</text>
+  </svg><figcaption>P(2, 1)을 대칭이동한 다섯 점</figcaption></figure>
+  <figure class="fig"><svg viewBox="0 0 240 180" role="img" aria-label="점 a b에 대한 대칭이동">
+    <line class="ln dash" x1="50" y1="140" x2="190" y2="40"/>
+    <circle class="dot" cx="50" cy="140" r="3.5"/><circle class="dotr" cx="120" cy="90" r="4"/><circle class="dot" cx="190" cy="40" r="3.5"/>
+    <text x="34" y="156">P</text><text class="i r" x="128" y="100">(a, b)</text><text x="194" y="36">P′</text>
+  </svg><figcaption>(<i>a</i>, <i>b</i>)가 PP′의 중점</figcaption></figure>
+</div>
+
+<h3>직접 옮기면서 식 보기</h3>
+<div class="lab">
+  <div>
+    <svg id="plane" viewBox="0 0 280 280" role="img" aria-label="좌표평면에서 도형이 이동하는 모습"></svg>
+    <button type="button" class="replay" id="replay" style="font:inherit;font-size:.9rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer">다시 재생</button>
+  </div>
+  <div>
+    <div class="ctl" id="shapeCtl">
+      <span class="grp">도형</span>
+      <button type="button" data-shape="circle" aria-pressed="true">원</button>
+      <button type="button" data-shape="line" aria-pressed="false">직선</button>
+    </div>
+    <div class="ctl" id="opCtl">
+      <span class="grp">이동</span>
+      <button type="button" data-op="tr" aria-pressed="true">평행이동</button>
+      <button type="button" data-op="xa" aria-pressed="false"><i>x</i>축 대칭</button>
+      <button type="button" data-op="ya" aria-pressed="false"><i>y</i>축 대칭</button>
+      <button type="button" data-op="o" aria-pressed="false">원점 대칭</button>
+      <button type="button" data-op="yx" aria-pressed="false"><i>y</i> = <i>x</i> 대칭</button>
+    </div>
+    <div class="sliders" id="sliders">
+      <label><span><i>x</i>축으로 <i>a</i></span><input type="range" id="sa" min="-4" max="4" step="1" value="3"><output id="oa">3</output></label>
+      <label><span><i>y</i>축으로 <i>b</i></span><input type="range" id="sb" min="-4" max="4" step="1" value="-2"><output id="ob">−2</output></label>
+    </div>
+    <div class="eq">
+      <div><span class="lbl">원래 도형</span><span class="m" id="e0"></span></div>
+      <div><span class="lbl">규칙</span><span id="e1"></span></div>
+      <div><span class="lbl">대입</span><span class="m" id="e2"></span></div>
+      <div><span class="lbl">정리</span><span class="m res" id="e3"></span></div>
+      <div><span class="lbl">점의 이동</span><span class="m" id="e4"></span></div>
+    </div>
+  </div>
+</div>
+
+<h3>직선에 대한 대칭 · 최단 거리</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">점 P를 직선 <i>l</i>에 대칭한 P′</div><div class="v"><span class="m">① PP′의 중점이 <i>l</i> 위 &nbsp; ② PP′ ⊥ <i>l</i></span><span class="note">두 조건을 연립해서 P′ 구하기</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 190" role="img" aria-label="직선에 대한 점의 대칭이동">
+      <line class="ln" x1="20" y1="160" x2="220" y2="40"/>
+      <line class="ac dash" x1="60" y1="50" x2="135.8" y2="176.4"/>
+      <polyline class="ln" points="104.8,109.1 109,116 102,120.1" style="stroke-width:1.1"/>
+      <circle class="dot" cx="60" cy="50" r="3.5"/><circle class="dotr" cx="97.9" cy="113.2" r="3.5"/><circle class="dot" cx="135.8" cy="176.4" r="3.5"/>
+      <text x="44" y="46">P</text><text x="144" y="182">P′</text><text class="s r" x="60" y="122">중점</text><text class="i" x="206" y="36">l</text>
+    </svg><figcaption>중점은 <i>l</i> 위, PP′ ⊥ <i>l</i></figcaption></figure></div>
+  <div class="row f"><div class="k">AP + PB 최소<span class="note">P는 직선 위, A·B는 같은 쪽</span></div><div class="v"><span class="m">최솟값 = A′B</span><span class="note">A를 직선에 대칭한 A′과 B를 이은 선분이 직선과 만나는 점이 P</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 190" role="img" aria-label="대칭을 이용한 최단 거리">
+      <line class="ln" x1="10" y1="110" x2="230" y2="110"/><line class="ax dash" x1="50" y1="50" x2="50" y2="170"/>
+      <line class="ac dash" x1="50" y1="170" x2="134" y2="110"/><line class="ac" x1="50" y1="50" x2="134" y2="110"/><line class="ac" x1="134" y1="110" x2="190" y2="70"/>
+      <circle class="dot" cx="50" cy="50" r="3"/><circle class="dot" cx="190" cy="70" r="3"/><circle class="dot" cx="50" cy="170" r="3"/><circle class="dotr" cx="134" cy="110" r="3.5"/>
+      <text x="36" y="48">A</text><text x="196" y="68">B</text><text x="30" y="178">A′</text><text class="r" x="128" y="128">P</text>
+    </svg><figcaption>AP = A′P → 꺾인 길이 = 곧은 길이</figcaption></figure></div>
+</div>
+<div class="pen"><b>이동 순서</b> — "평행이동 후 대칭이동"과 "대칭이동 후 평행이동"은 결과가 다르다. 적힌 순서대로 한 단계씩.</div>
+
+<!-- ================= 집합 ================= -->
+<h2 id="set">집합<small>Ⅱ. 집합과 명제</small></h2>
+
+<h3>집합의 기본</h3>
+<div class="sheet">
+  <div class="row"><div class="k">원소 / 원소의 개수</div><div class="v"><span class="m"><i>a</i> ∈ <i>A</i>, <i>b</i> ∉ <i>A</i>, <i>n</i>(<i>A</i>)</span><span class="note"><i>n</i>(∅) = 0, <i>n</i>({0}) = 1, <i>n</i>({∅}) = 1</span></div></div>
+  <div class="row f"><div class="k">부분집합</div><div class="v"><span class="m"><i>A</i> ⊂ <i>B</i> : <i>A</i>의 모든 원소가 <i>B</i>에 속함</span><span class="m mline">∅ ⊂ <i>A</i>, <i>A</i> ⊂ <i>A</i></span><span class="m mline"><i>A</i> ⊂ <i>B</i>이고 <i>B</i> ⊂ <i>C</i> ⇒ <i>A</i> ⊂ <i>C</i></span></div>
+    <figure class="fig venn" data-v="subset" data-cap="A ⊂ B"></figure></div>
+  <div class="row"><div class="k">서로 같은 집합</div><div class="v"><span class="m"><i>A</i> = <i>B</i> ⇔ <i>A</i> ⊂ <i>B</i>이고 <i>B</i> ⊂ <i>A</i></span></div></div>
+  <div class="row f"><div class="k">서로소</div><div class="v"><span class="m"><i>A</i> ∩ <i>B</i> = ∅</span><span class="note">공통 원소가 없음</span></div>
+    <figure class="fig venn" data-v="disjoint" data-cap="겹치는 부분 없음"></figure></div>
+</div>
+<div class="pen"><b>기호 구분</b> — 원소와 집합 사이는 ∈, 집합과 집합 사이는 ⊂. {1} ⊂ {1, 2}는 참, {1} ∈ {1, 2}는 거짓.</div>
+
+<h3>부분집합의 개수 — <span class="m" style="line-height:1"><i>n</i>(<i>A</i>) = <i>n</i></span></h3>
+<div class="sheet">
+  <div class="row f"><div class="k">부분집합</div><div class="v"><span class="m">2<sup><i>n</i></sup></span><span class="note">원소마다 "넣는다 / 안 넣는다" 2가지씩</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 120" role="img" aria-label="원소 a b c 각각 넣거나 빼는 두 가지 선택">
+      <text class="i" x="46" y="22">a</text><text class="i" x="116" y="22">b</text><text class="i" x="186" y="22">c</text>
+      <rect class="ac" x="30" y="34" width="40" height="26" rx="4"/><rect class="ln" x="30" y="70" width="40" height="26" rx="4"/>
+      <rect class="ac" x="100" y="34" width="40" height="26" rx="4"/><rect class="ln" x="100" y="70" width="40" height="26" rx="4"/>
+      <rect class="ac" x="170" y="34" width="40" height="26" rx="4"/><rect class="ln" x="170" y="70" width="40" height="26" rx="4"/>
+      <text class="r" x="44" y="52">○</text><text x="44" y="88">×</text><text class="r" x="114" y="52">○</text><text x="114" y="88">×</text><text class="r" x="184" y="52">○</text><text x="184" y="88">×</text>
+      <text x="80" y="70">·</text><text x="150" y="70">·</text>
+      <text class="s" x="120" y="114" text-anchor="middle">2 × 2 × 2 = 2³ = 8</text>
+    </svg><figcaption>{<i>a</i>, <i>b</i>, <i>c</i>}의 부분집합</figcaption></figure></div>
+  <div class="row"><div class="k">진부분집합</div><div class="v"><span class="m">2<sup><i>n</i></sup> − 1</span><span class="note">자기 자신만 뺌</span></div></div>
+  <div class="row f"><div class="k">특정 원소 <i>k</i>개를 포함 (또는 제외)</div><div class="v"><span class="m">2<sup><i>n</i> − <i>k</i></sup></span><span class="note">정해진 원소는 선택지가 1개뿐 → 나머지만 2가지씩</span></div>
+    <figure class="fig"><svg viewBox="0 0 240 120" role="img" aria-label="a는 반드시 포함하고 b c만 선택">
+      <text class="i" x="46" y="22">a</text><text class="i" x="116" y="22">b</text><text class="i" x="186" y="22">c</text>
+      <rect class="ac" x="30" y="34" width="40" height="26" rx="4" style="stroke-width:3"/>
+      <rect class="ac" x="100" y="34" width="40" height="26" rx="4"/><rect class="ln" x="100" y="70" width="40" height="26" rx="4"/>
+      <rect class="ac" x="170" y="34" width="40" height="26" rx="4"/><rect class="ln" x="170" y="70" width="40" height="26" rx="4"/>
+      <text class="r" x="44" y="52">○</text><text class="r" x="114" y="52">○</text><text x="114" y="88">×</text><text class="r" x="184" y="52">○</text><text x="184" y="88">×</text>
+      <text class="s" x="120" y="114" text-anchor="middle">1 × 2 × 2 = 2³⁻¹ = 4</text>
+    </svg><figcaption><i>a</i>를 반드시 포함</figcaption></figure></div>
+  <div class="row"><div class="k"><i>k</i>개 포함, <i>l</i>개 제외</div><div class="v"><span class="m">2<sup><i>n</i> − <i>k</i> − <i>l</i></sup></span></div></div>
+  <div class="row"><div class="k">특정 원소 중 적어도 하나 포함</div><div class="v"><span class="m">2<sup><i>n</i></sup> − 2<sup><i>n</i> − <i>k</i></sup></span><span class="note">(전체) − (하나도 포함하지 않는 것)</span></div></div>
+  <div class="row"><div class="k"><i>A</i> ⊂ <i>X</i> ⊂ <i>B</i>인 <i>X</i></div><div class="v"><span class="m">2<sup><i>n</i>(<i>B</i>) − <i>n</i>(<i>A</i>)</sup></span><span class="note"><i>A</i>의 원소는 반드시 포함, <i>B</i>에 없는 건 선택 불가</span></div></div>
+</div>
+
+<h3>집합의 연산</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">합집합</div><div class="v"><span class="m"><i>A</i> ∪ <i>B</i> = {<i>x</i> | <i>x</i> ∈ <i>A</i> 또는 <i>x</i> ∈ <i>B</i>}</span></div>
+    <figure class="fig venn" data-v="union" data-cap="A ∪ B"></figure></div>
+  <div class="row f"><div class="k">교집합</div><div class="v"><span class="m"><i>A</i> ∩ <i>B</i> = {<i>x</i> | <i>x</i> ∈ <i>A</i> 그리고 <i>x</i> ∈ <i>B</i>}</span></div>
+    <figure class="fig venn" data-v="inter" data-cap="A ∩ B"></figure></div>
+  <div class="row f"><div class="k">여집합</div><div class="v"><span class="m"><i>A</i><sup>C</sup> = {<i>x</i> | <i>x</i> ∈ <i>U</i> 그리고 <i>x</i> ∉ <i>A</i>} = <i>U</i> − <i>A</i></span><span class="note"><i>A</i> ∪ <i>A</i><sup>C</sup> = <i>U</i>, <i>A</i> ∩ <i>A</i><sup>C</sup> = ∅, (<i>A</i><sup>C</sup>)<sup>C</sup> = <i>A</i>, <i>U</i><sup>C</sup> = ∅, ∅<sup>C</sup> = <i>U</i></span></div>
+    <figure class="fig venn" data-v="comp" data-cap="Aᶜ"></figure></div>
+  <div class="row f"><div class="k">차집합</div><div class="v"><span class="m"><i>A</i> − <i>B</i> = {<i>x</i> | <i>x</i> ∈ <i>A</i> 그리고 <i>x</i> ∉ <i>B</i>}</span><span class="m mline"><mark><i>A</i> − <i>B</i> = <i>A</i> ∩ <i>B</i><sup>C</sup></mark></span></div>
+    <figure class="fig venn" data-v="diff" data-cap="A − B"></figure></div>
+  <div class="row f"><div class="k">서로소와 같은 표현</div><div class="v"><span class="m"><i>A</i> ∩ <i>B</i> = ∅ ⇔ <i>A</i> − <i>B</i> = <i>A</i> ⇔ <i>B</i> − <i>A</i> = <i>B</i> ⇔ <i>A</i> ⊂ <i>B</i><sup>C</sup></span></div>
+    <figure class="fig venn" data-v="disjoint" data-cap="A가 통째로 Bᶜ 안에"></figure></div>
+</div>
+
+<h3>연산 법칙</h3>
+<div class="sheet">
+  <div class="row"><div class="k">교환법칙</div><div class="v"><span class="m"><i>A</i> ∪ <i>B</i> = <i>B</i> ∪ <i>A</i>, <i>A</i> ∩ <i>B</i> = <i>B</i> ∩ <i>A</i></span></div></div>
+  <div class="row"><div class="k">결합법칙</div><div class="v"><span class="m">(<i>A</i> ∪ <i>B</i>) ∪ <i>C</i> = <i>A</i> ∪ (<i>B</i> ∪ <i>C</i>)</span><span class="m mline">(<i>A</i> ∩ <i>B</i>) ∩ <i>C</i> = <i>A</i> ∩ (<i>B</i> ∩ <i>C</i>)</span></div></div>
+  <div class="row f"><div class="k">분배법칙</div><div class="v"><span class="m"><i>A</i> ∩ (<i>B</i> ∪ <i>C</i>) = (<i>A</i> ∩ <i>B</i>) ∪ (<i>A</i> ∩ <i>C</i>)</span><span class="m mline"><i>A</i> ∪ (<i>B</i> ∩ <i>C</i>) = (<i>A</i> ∪ <i>B</i>) ∩ (<i>A</i> ∪ <i>C</i>)</span></div>
+    <figure class="fig venn" data-v="dist" data-cap="A ∩ (B ∪ C)"></figure></div>
+  <div class="row f"><div class="k">드모르간 법칙 ①</div><div class="v"><span class="m"><mark>(<i>A</i> ∪ <i>B</i>)<sup>C</sup> = <i>A</i><sup>C</sup> ∩ <i>B</i><sup>C</sup></mark></span><span class="note">괄호를 풀면 ∪ → ∩, 각각 여집합</span></div>
+    <figure class="fig venn" data-v="compU" data-cap="(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ"></figure></div>
+  <div class="row f"><div class="k">드모르간 법칙 ②</div><div class="v"><span class="m"><mark>(<i>A</i> ∩ <i>B</i>)<sup>C</sup> = <i>A</i><sup>C</sup> ∪ <i>B</i><sup>C</sup></mark></span><span class="note">괄호를 풀면 ∩ → ∪, 각각 여집합</span></div>
+    <figure class="fig venn" data-v="interC" data-cap="(A ∩ B)ᶜ = Aᶜ ∪ Bᶜ"></figure></div>
+  <div class="row"><div class="k">흡수법칙</div><div class="v"><span class="m"><i>A</i> ∪ (<i>A</i> ∩ <i>B</i>) = <i>A</i>, <i>A</i> ∩ (<i>A</i> ∪ <i>B</i>) = <i>A</i></span></div></div>
+</div>
+
+<h3>포함 관계와 같은 표현</h3>
+<div class="sheet">
+  <div class="row f"><div class="k"><i>A</i> ⊂ <i>B</i>와 모두 동치</div><div class="v"><span class="m"><i>A</i> ∩ <i>B</i> = <i>A</i> ⇔ <i>A</i> ∪ <i>B</i> = <i>B</i> ⇔ <i>A</i> − <i>B</i> = ∅</span><span class="m mline">⇔ <i>B</i><sup>C</sup> ⊂ <i>A</i><sup>C</sup> ⇔ <i>A</i> ∩ <i>B</i><sup>C</sup> = ∅ ⇔ <i>A</i><sup>C</sup> ∪ <i>B</i> = <i>U</i></span><span class="note">오른쪽 그림에서 하나씩 확인해 보기</span></div>
+    <figure class="fig venn" data-v="subset" data-cap="A가 B 안에 쏙"></figure></div>
+</div>
+<div class="pen"><b>복잡한 식 정리</b> — 차집합은 전부 ∩<sup>C</sup>로 바꾸고 드모르간·분배법칙으로 정리. 헷갈리면 벤다이어그램 영역에 번호를 붙여 확인.</div>
+
+<h3>유한집합의 원소의 개수</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">합집합</div><div class="v"><span class="m"><i>n</i>(<i>A</i> ∪ <i>B</i>) = <i>n</i>(<i>A</i>) + <i>n</i>(<i>B</i>) − <i>n</i>(<i>A</i> ∩ <i>B</i>)</span><span class="note">②가 두 번 세어졌으니 한 번 뺌. 서로소면 그냥 더하기</span></div>
+    <figure class="fig venn" data-v="regions" data-cap="영역을 ①②③④로 두고 연립"></figure></div>
+  <div class="row f"><div class="k">세 집합</div><div class="v"><span class="m"><i>n</i>(<i>A</i>∪<i>B</i>∪<i>C</i>) = <i>n</i>(<i>A</i>) + <i>n</i>(<i>B</i>) + <i>n</i>(<i>C</i>)</span><span class="m mline">− <i>n</i>(<i>A</i>∩<i>B</i>) − <i>n</i>(<i>B</i>∩<i>C</i>) − <i>n</i>(<i>C</i>∩<i>A</i>) + <i>n</i>(<i>A</i>∩<i>B</i>∩<i>C</i>)</span><span class="note">가운데는 3번 더하고 3번 빼져서 다시 한 번 더함</span></div>
+    <figure class="fig venn" data-v="three" data-cap="세 집합: 7개 영역"></figure></div>
+  <div class="row f"><div class="k">여집합</div><div class="v"><span class="m"><i>n</i>(<i>A</i><sup>C</sup>) = <i>n</i>(<i>U</i>) − <i>n</i>(<i>A</i>)</span></div>
+    <figure class="fig venn" data-v="comp" data-cap="U에서 A를 뺀 부분"></figure></div>
+  <div class="row f"><div class="k">차집합</div><div class="v"><span class="m"><i>n</i>(<i>A</i> − <i>B</i>) = <i>n</i>(<i>A</i>) − <i>n</i>(<i>A</i> ∩ <i>B</i>)</span><span class="m mline">= <i>n</i>(<i>A</i> ∪ <i>B</i>) − <i>n</i>(<i>B</i>)</span><span class="note"><i>B</i> ⊂ <i>A</i>이면 <i>n</i>(<i>A</i> − <i>B</i>) = <i>n</i>(<i>A</i>) − <i>n</i>(<i>B</i>)</span></div>
+    <figure class="fig venn" data-v="diff" data-cap="A에서 겹친 부분을 뺀다"></figure></div>
+  <div class="row f"><div class="k">둘 다 아닌 것</div><div class="v"><span class="m"><i>n</i>(<i>A</i><sup>C</sup> ∩ <i>B</i><sup>C</sup>) = <i>n</i>(<i>U</i>) − <i>n</i>(<i>A</i> ∪ <i>B</i>)</span><span class="note">드모르간 활용</span></div>
+    <figure class="fig venn" data-v="compU" data-cap="바깥쪽 영역"></figure></div>
+  <div class="row f"><div class="k">한쪽에만 속함</div><div class="v"><span class="m"><i>n</i>((<i>A</i>−<i>B</i>) ∪ (<i>B</i>−<i>A</i>)) = <i>n</i>(<i>A</i> ∪ <i>B</i>) − <i>n</i>(<i>A</i> ∩ <i>B</i>)</span></div>
+    <figure class="fig venn" data-v="sym" data-cap="가운데만 빼고"></figure></div>
+</div>
+
+<h3>교집합 원소 개수의 최대·최소</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">범위</div><div class="v"><span class="m"><i>n</i>(<i>A</i>) + <i>n</i>(<i>B</i>) − <i>n</i>(<i>U</i>) ≤ <i>n</i>(<i>A</i> ∩ <i>B</i>) ≤ min{<i>n</i>(<i>A</i>), <i>n</i>(<i>B</i>)}</span><span class="note">왼쪽이 음수면 최솟값은 0<br>최대: 작은 집합이 큰 집합에 쏙 들어갈 때 / 최소: 최대한 안 겹치게 양 끝으로 밀 때</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 150" role="img" aria-label="막대로 본 교집합의 최소와 최대">
+      <rect class="ax" x="40" y="12" width="200" height="12"/><text class="i s" x="18" y="23">U</text>
+      <text class="s" x="4" y="60">최소</text>
+      <rect class="ac" x="40" y="40" width="130" height="10"/><rect class="ln" x="110" y="54" width="130" height="10"/>
+      <rect x="110" y="36" width="60" height="32" style="fill:var(--red);fill-opacity:.18"/>
+      <text class="i s" x="44" y="36">A</text><text class="i s" x="226" y="76">B</text>
+      <text class="s" x="4" y="116">최대</text>
+      <rect class="ac" x="40" y="98" width="130" height="10"/><rect class="ln" x="40" y="112" width="70" height="10"/>
+      <rect x="40" y="94" width="70" height="32" style="fill:var(--red);fill-opacity:.18"/>
+      <text class="i s" x="44" y="92">A</text><text class="i s" x="96" y="138">B</text>
+    </svg><figcaption>색칠한 부분 = <i>A</i> ∩ <i>B</i></figcaption></figure></div>
+</div>
+<div class="pen"><b>서술형 팁</b> — 원소의 개수 문제는 벤다이어그램 각 영역을 <i>a</i>, <i>b</i>, <i>c</i>…로 두고 연립하면 실수가 줄어든다.</div>
+
+<!-- ================= 명제 ================= -->
+<h2 id="prop">명제<small>Ⅱ. 집합과 명제</small></h2>
+
+<h3>명제와 조건</h3>
+<div class="sheet">
+  <div class="row"><div class="k">명제</div><div class="v"><span class="note" style="font-size:.97rem;color:var(--ink)">참, 거짓을 명확히 판별할 수 있는 문장이나 식</span></div></div>
+  <div class="row"><div class="k">조건</div><div class="v"><span class="note" style="font-size:.97rem;color:var(--ink)">변수의 값에 따라 참, 거짓이 달라지는 문장이나 식 — <i>p</i>(<i>x</i>), <i>q</i>(<i>x</i>)</span></div></div>
+  <div class="row f"><div class="k">진리집합</div><div class="v"><span class="m">조건 <i>p</i>를 참으로 만드는 원소의 집합 → <i>P</i></span></div>
+    <figure class="fig venn" data-v="truth" data-cap="p가 참인 원소들 = P"></figure></div>
+  <div class="row f"><div class="k">부정 ~<i>p</i></div><div class="v"><span class="m">진리집합 <i>P</i><sup>C</sup></span><span class="note">명제의 부정: 원래가 참이면 부정은 거짓</span></div>
+    <figure class="fig venn" data-v="neg" data-cap="~p의 진리집합 = Pᶜ"></figure></div>
+</div>
+
+<h3>부정 만들기</h3>
+<div class="tw"><table class="t">
+  <tr><th>조건</th><th>부정</th></tr>
+  <tr><td><span class="m"><i>x</i> = <i>a</i></span></td><td><span class="m"><i>x</i> ≠ <i>a</i></span></td></tr>
+  <tr><td><span class="m"><i>x</i> &gt; <i>a</i></span></td><td><span class="m"><mark><i>x</i> ≤ <i>a</i></mark></span> (등호 들어감)</td></tr>
+  <tr><td><span class="m"><i>p</i> 그리고 <i>q</i></span></td><td><span class="m">~<i>p</i> 또는 ~<i>q</i></span></td></tr>
+  <tr><td><span class="m"><i>p</i> 또는 <i>q</i></span></td><td><span class="m">~<i>p</i> 그리고 ~<i>q</i></span></td></tr>
+  <tr><td><span class="m"><i>a</i> = 0 그리고 <i>b</i> = 0</span></td><td><span class="m"><i>a</i> ≠ 0 또는 <i>b</i> ≠ 0</span></td></tr>
+  <tr><td>모든 <span class="m"><i>x</i></span>에 대하여 <span class="m"><i>p</i></span></td><td>어떤 <span class="m"><i>x</i></span>에 대하여 <span class="m">~<i>p</i></span></td></tr>
+  <tr><td>어떤 <span class="m"><i>x</i></span>에 대하여 <span class="m"><i>p</i></span></td><td>모든 <span class="m"><i>x</i></span>에 대하여 <span class="m">~<i>p</i></span></td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig"><svg viewBox="0 0 260 110" role="img" aria-label="x가 a보다 큼과 그 부정 x가 a 이하">
+    <line class="ax" x1="10" y1="90" x2="250" y2="90"/><line class="ax" x1="130" y1="84" x2="130" y2="96"/><text class="i" x="126" y="106">a</text>
+    <line class="ln" x1="130" y1="30" x2="246" y2="30"/><polyline class="ln" points="238,25 246,30 238,35"/>
+    <circle cx="130" cy="30" r="4.5" style="fill:var(--card);stroke:var(--ink);stroke-width:1.6"/><text class="s" x="170" y="22">x &gt; a</text>
+    <line class="ac" x1="130" y1="60" x2="14" y2="60"/><polyline class="ac" points="22,55 14,60 22,65"/>
+    <circle class="dotr" cx="130" cy="60" r="4.5"/><text class="s r" x="60" y="52">x ≤ a</text>
+  </svg><figcaption>빈 점 ↔ 찬 점: 부정하면 경계가 넘어간다</figcaption></figure>
+</div>
+<div class="pen"><b>드모르간과 같은 원리</b> — "그리고 ↔ 또는", "모든 ↔ 어떤"이 서로 바뀐다. <i>x</i> &lt; 1 또는 <i>x</i> &gt; 3의 부정은 1 ≤ <i>x</i> ≤ 3.</div>
+
+<h3>명제 <i>p</i> → <i>q</i>의 참·거짓</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">참</div><div class="v"><span class="m"><mark><i>p</i> → <i>q</i> 참 ⇔ <i>P</i> ⊂ <i>Q</i></mark></span><span class="note">이때 <i>p</i> ⇒ <i>q</i>로 쓴다</span></div>
+    <figure class="fig venn" data-v="pq" data-cap="P가 Q 안에 → 참"></figure></div>
+  <div class="row f"><div class="k">거짓</div><div class="v"><span class="m"><i>P</i> ⊄ <i>Q</i></span><span class="note">반례 = <i>P</i> − <i>Q</i> (= <i>P</i> ∩ <i>Q</i><sup>C</sup>)의 원소. 반례 하나면 거짓</span></div>
+    <figure class="fig venn" data-v="pqno" data-cap="색칠한 곳 = 반례"></figure></div>
+  <div class="row f"><div class="k">"모든 <i>x</i>에 대하여 <i>p</i>"</div><div class="v"><span class="m">참 ⇔ <i>P</i> = <i>U</i></span><span class="note">예외가 하나라도 있으면 거짓</span></div>
+    <figure class="fig venn" data-v="allU" data-cap="P가 전체를 채움"></figure></div>
+  <div class="row f"><div class="k">"어떤 <i>x</i>에 대하여 <i>p</i>"</div><div class="v"><span class="m">참 ⇔ <i>P</i> ≠ ∅</span><span class="note">예가 하나만 있어도 참</span></div>
+    <figure class="fig venn" data-v="some" data-cap="원소가 하나라도 있으면 참"></figure></div>
+</div>
+
+<h3>역 · 이 · 대우</h3>
+<div class="sheet">
+  <div class="row"><div class="k">역</div><div class="v"><span class="m"><i>q</i> → <i>p</i></span><span class="note">가정과 결론을 바꿈</span></div></div>
+  <div class="row"><div class="k">이</div><div class="v"><span class="m">~<i>p</i> → ~<i>q</i></span><span class="note">둘 다 부정</span></div></div>
+  <div class="row"><div class="k">대우</div><div class="v"><span class="m">~<i>q</i> → ~<i>p</i></span><span class="note">바꾸고 둘 다 부정</span></div></div>
+  <div class="row f"><div class="k">참·거짓 관계</div><div class="v"><span class="m"><mark>명제가 참 ⇔ 대우가 참</mark></span><span class="note">역과 이도 서로 대우라 참·거짓이 같다. 명제가 참이어도 역은 참인지 모름</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 170" role="img" aria-label="명제와 역 이 대우의 관계도">
+      <line class="ln" x1="98" y1="30" x2="162" y2="30"/><line class="ln" x1="98" y1="140" x2="162" y2="140"/>
+      <line class="ax" x1="60" y1="46" x2="60" y2="124"/><line class="ax" x1="200" y1="46" x2="200" y2="124"/>
+      <line class="ac" x1="95" y1="46" x2="165" y2="124"/><line class="ac" x1="165" y1="46" x2="95" y2="124"/>
+      <text class="i" x="60" y="35" text-anchor="middle">p → q</text><text class="i" x="200" y="35" text-anchor="middle">q → p</text>
+      <text class="i" x="60" y="145" text-anchor="middle">~p → ~q</text><text class="i" x="200" y="145" text-anchor="middle">~q → ~p</text>
+      <text class="s" x="130" y="22" text-anchor="middle">역</text><text class="s" x="130" y="160" text-anchor="middle">역</text>
+      <text class="s" x="50" y="90" text-anchor="end">이</text><text class="s" x="210" y="90">이</text><text class="s r" x="130" y="74" text-anchor="middle">대우</text>
+    </svg><figcaption>대각선끼리 참·거짓이 같다</figcaption></figure></div>
+  <div class="row f"><div class="k">삼단논법</div><div class="v"><span class="m"><i>p</i> ⇒ <i>q</i>이고 <i>q</i> ⇒ <i>r</i>이면 <i>p</i> ⇒ <i>r</i></span></div>
+    <figure class="fig venn" data-v="chain" data-cap="P ⊂ Q ⊂ R"></figure></div>
+</div>
+
+<h3>충분조건 · 필요조건 · 필요충분조건</h3>
+<div class="sheet">
+  <div class="row f"><div class="k"><i>p</i> ⇒ <i>q</i>일 때</div><div class="v"><span class="m"><i>p</i>는 <i>q</i>이기 위한 <mark>충분조건</mark></span><span class="m mline"><i>q</i>는 <i>p</i>이기 위한 <mark>필요조건</mark></span><span class="note">진리집합으로는 <i>P</i> ⊂ <i>Q</i></span></div>
+    <figure class="fig venn" data-v="suff" data-cap="작은 쪽이 충분, 큰 쪽이 필요"></figure></div>
+  <div class="row f"><div class="k"><i>p</i> ⇔ <i>q</i>일 때</div><div class="v"><span class="m"><i>p</i>는 <i>q</i>이기 위한 <mark>필요충분조건</mark></span><span class="note"><i>p</i> ⇒ <i>q</i>이고 <i>q</i> ⇒ <i>p</i> 둘 다 참 → 진리집합 <i>P</i> = <i>Q</i>. 이때 <i>q</i>도 <i>p</i>이기 위한 필요충분조건</span></div>
+    <figure class="fig venn" data-v="eq" data-cap="두 집합이 완전히 겹침"></figure></div>
+  <div class="row"><div class="k">판정 순서</div><div class="v"><span class="m">"<i>p</i>는 <i>q</i>이기 위한 ___조건"</span><span class="note" style="font-size:.95rem;color:var(--ink)">① <i>p</i> → <i>q</i> 참? → 참이면 충분<br>② <i>q</i> → <i>p</i> 참? → 참이면 필요<br>③ 둘 다 참이면 필요충분, 둘 다 거짓이면 아무 조건도 아님</span></div></div>
+</div>
+<div class="tw" style="margin-top:12px"><table class="t">
+  <tr><th><span class="m"><i>p</i> → <i>q</i></span></th><th><span class="m"><i>q</i> → <i>p</i></span></th><th><span class="m"><i>p</i></span>는 <span class="m"><i>q</i></span>이기 위한</th><th>진리집합</th></tr>
+  <tr><td>참</td><td>거짓</td><td><b>충분</b>조건</td><td><span class="m"><i>P</i> ⊂ <i>Q</i>, <i>P</i> ≠ <i>Q</i></span></td></tr>
+  <tr><td>거짓</td><td>참</td><td><b>필요</b>조건</td><td><span class="m"><i>Q</i> ⊂ <i>P</i>, <i>P</i> ≠ <i>Q</i></span></td></tr>
+  <tr><td>참</td><td>참</td><td><b>필요충분</b>조건</td><td><span class="m"><i>P</i> = <i>Q</i></span></td></tr>
+  <tr><td>거짓</td><td>거짓</td><td>아무 조건도 아님</td><td>포함 관계 없음</td></tr>
+</table></div>
+<div class="figline">
+  <figure class="fig venn" data-v="suff2" data-cap="p는 q이기 위한 충분조건"></figure>
+  <figure class="fig venn" data-v="nec" data-cap="p는 q이기 위한 필요조건"></figure>
+  <figure class="fig venn" data-v="eq" data-cap="p는 q이기 위한 필요충분조건"></figure>
+  <figure class="fig venn" data-v="none" data-cap="아무 조건도 아님"></figure>
+</div>
+
+<h3>자주 나오는 필요충분조건 (<i>a</i>, <i>b</i>, <i>x</i>, <i>y</i>는 실수)</h3>
+<div class="sheet">
+  <div class="row"><div class="k">제곱의 합</div><div class="v"><span class="m"><i>a</i><sup>2</sup> + <i>b</i><sup>2</sup> = 0 ⇔ <i>a</i> = 0 그리고 <i>b</i> = 0</span><span class="note">제곱은 0 이상이라 둘 다 0일 수밖에 없음</span></div></div>
+  <div class="row"><div class="k">절댓값의 합</div><div class="v"><span class="m">|<i>a</i>| + |<i>b</i>| = 0 ⇔ <i>a</i> = 0 그리고 <i>b</i> = 0</span></div></div>
+  <div class="row"><div class="k">곱이 0</div><div class="v"><span class="m"><i>ab</i> = 0 ⇔ <i>a</i> = 0 또는 <i>b</i> = 0</span></div></div>
+  <div class="row"><div class="k">곱이 0이 아님</div><div class="v"><span class="m"><i>ab</i> ≠ 0 ⇔ <i>a</i> ≠ 0 그리고 <i>b</i> ≠ 0</span></div></div>
+  <div class="row"><div class="k">둘 다 양수</div><div class="v"><span class="m"><i>x</i> &gt; 0 그리고 <i>y</i> &gt; 0 ⇔ <i>x</i> + <i>y</i> &gt; 0 그리고 <i>xy</i> &gt; 0</span></div></div>
+  <div class="row"><div class="k">함정</div><div class="v"><span class="m"><i>ab</i> &gt; 0 ⇐ <i>a</i> &gt; 0 그리고 <i>b</i> &gt; 0</span><span class="note">역은 거짓 (<i>a</i> = <i>b</i> = −1). "<i>a</i> &gt; 0 그리고 <i>b</i> &gt; 0"은 <i>ab</i> &gt; 0이기 위한 충분조건</span></div></div>
+</div>
+
+<h3>예시로 판정하기</h3>
+<div class="sheet">
+  <div class="row f"><div class="k">원소로 비교</div><div class="v"><span class="m"><i>p</i>: <i>x</i> = 1, &nbsp;<i>q</i>: <i>x</i><sup>2</sup> = 1</span><span class="note"><i>P</i> = {1}, <i>Q</i> = {−1, 1} → <i>P</i> ⊂ <i>Q</i>, <i>P</i> ≠ <i>Q</i><br><i>p</i>는 <i>q</i>이기 위한 충분조건, <i>q</i>는 <i>p</i>이기 위한 필요조건</span></div>
+    <figure class="fig venn" data-v="ex" data-cap="P = {1}, Q = {−1, 1}"></figure></div>
+  <div class="row f"><div class="k">충분조건이 되도록<br>(범위)</div><div class="v"><span class="m"><i>p</i>: −1 ≤ <i>x</i> ≤ 3, <i>q</i>: <i>x</i> ≤ <i>a</i></span><span class="note"><i>p</i>가 <i>q</i>이기 위한 충분조건 → <i>P</i> ⊂ <i>Q</i> → <i>a</i> ≥ 3<br>끝점 <i>a</i> = 3이 되는지 따로 확인</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 100" role="img" aria-label="수직선에서 진리집합 P가 Q에 포함되는 조건">
+      <line class="ax" x1="10" y1="70" x2="250" y2="70"/>
+      <line class="ac" x1="70" y1="52" x2="160" y2="52" style="stroke-width:3"/><circle class="dotr" cx="70" cy="52" r="4"/><circle class="dotr" cx="160" cy="52" r="4"/>
+      <line class="ln" x1="200" y1="30" x2="14" y2="30"/><polyline class="ln" points="22,25 14,30 22,35"/><circle class="dot" cx="200" cy="30" r="4"/>
+      <line class="ax" x1="70" y1="66" x2="70" y2="74"/><line class="ax" x1="160" y1="66" x2="160" y2="74"/><line class="ax" x1="200" y1="66" x2="200" y2="74"/>
+      <text x="62" y="90">−1</text><text x="156" y="90">3</text><text class="i" x="196" y="90">a</text>
+      <text class="r i" x="110" y="46">P</text><text class="i" x="110" y="24">Q</text>
+    </svg><figcaption><i>P</i>가 <i>Q</i> 안에 들어가도록</figcaption></figure></div>
+  <div class="row f"><div class="k">필요조건이 되도록<br>(범위)</div><div class="v"><span class="m"><i>p</i>: <i>a</i> ≤ <i>x</i> ≤ 5, <i>q</i>: 1 ≤ <i>x</i> ≤ 3</span><span class="note"><i>p</i>가 <i>q</i>이기 위한 필요조건 → <i>q</i> ⇒ <i>p</i> → <i>Q</i> ⊂ <i>P</i> → <i>a</i> ≤ 1<br>방향이 반대라는 것에 주의</span></div>
+    <figure class="fig"><svg viewBox="0 0 260 100" role="img" aria-label="수직선에서 진리집합 Q가 P에 포함되는 조건">
+      <line class="ax" x1="10" y1="70" x2="250" y2="70"/>
+      <line class="ln" x1="50" y1="30" x2="220" y2="30" style="stroke-width:2"/><circle class="dot" cx="50" cy="30" r="4"/><circle class="dot" cx="220" cy="30" r="4"/>
+      <line class="ac" x1="90" y1="52" x2="160" y2="52" style="stroke-width:3"/><circle class="dotr" cx="90" cy="52" r="4"/><circle class="dotr" cx="160" cy="52" r="4"/>
+      <line class="ax" x1="50" y1="66" x2="50" y2="74"/><line class="ax" x1="90" y1="66" x2="90" y2="74"/><line class="ax" x1="160" y1="66" x2="160" y2="74"/><line class="ax" x1="220" y1="66" x2="220" y2="74"/>
+      <text class="i" x="46" y="90">a</text><text x="86" y="90">1</text><text x="156" y="90">3</text><text x="216" y="90">5</text>
+      <text class="i" x="130" y="24">P</text><text class="r i" x="122" y="46">Q</text>
+    </svg><figcaption><i>Q</i>가 <i>P</i> 안에 들어가도록 <i>a</i>를 왼쪽에</figcaption></figure></div>
+  <div class="row"><div class="k">필요충분조건이 되도록</div><div class="v"><span class="m"><i>P</i> = <i>Q</i> → 양 끝점이 정확히 일치</span><span class="note">예: <i>p</i>: <i>x</i><sup>2</sup> − <i>ax</i> + 2 = 0, <i>q</i>: <i>x</i> = 1 또는 <i>x</i> = 2 → 두 근이 1, 2 → <i>a</i> = 3</span></div></div>
+  <div class="row"><div class="k">대우로 판단</div><div class="v"><span class="m">~<i>q</i> ⇒ ~<i>p</i> 이면 <i>p</i> ⇒ <i>q</i></span><span class="note">직접 보이기 어려우면 대우로. 부정끼리 비교하는 문제는 <i>P</i><sup>C</sup>, <i>Q</i><sup>C</sup>의 포함 관계를 뒤집어 생각</span></div></div>
+</div>
+<div class="pen"><b>외우는 법</b> — "<i>p</i>는 <i>q</i>이기 위한"에서 <i>p</i>에서 출발하는 화살표가 참이면 <b>충분</b>, <i>p</i>로 들어오는 화살표가 참이면 <b>필요</b>. 집합으로는 작은 쪽이 충분, 큰 쪽이 필요.</div>
+
+<footer>공통수학2 (2022 개정) · 도형의 방정식 ~ 명제(충분·필요조건) · 시험 대비 요약본. 인쇄하면 단원마다 새 페이지로 나뉩니다.</footer>
+</div>
+
+<script>
+/* ---------- Venn diagrams ---------- */
+(function(){
+  let uid=0;
+  function build(kind){
+    const id='v'+(uid++); let defs='', shade='', extra='';
+    const c=(o,a)=>`<circle cx="${o.cx}" cy="${o.cy}" r="${o.r}" ${a||''}/>`;
+    const RECT=a=>`<rect x="10" y="10" width="200" height="120" ${a||''}/>`;
+    const blk=o=>c(o,'fill="#000"');
+    const mask=(n,inner)=>{defs+=`<mask id="${id}${n}"><rect x="10" y="10" width="200" height="120" fill="#fff"/>${inner}</mask>`;return `mask="url(#${id}${n})"`;};
+    const clip=(n,o)=>{defs+=`<clipPath id="${id}${n}">${c(o)}</clipPath>`;return `clip-path="url(#${id}${n})"`;};
+    let A={cx:85,cy:72,r:42,l:'A',lx:44,ly:38}, B={cx:135,cy:72,r:42,l:'B',lx:168,ly:38};
+    let cs=[A,B];
+    const T3=()=>{A={cx:86,cy:56,r:36,l:'A',lx:44,ly:30};B={cx:134,cy:56,r:36,l:'B',lx:168,ly:30};const C={cx:110,cy:94,r:36,l:'C',lx:150,ly:126};cs=[A,B,C];return C;};
+    const IN=(la,lb)=>{A={cx:96,cy:80,r:26,l:la,lx:90,ly:72,cls:'r'};B={cx:110,cy:72,r:56,l:lb,lx:152,ly:36};cs=[A,B];};
+    switch(kind){
+      case 'union': shade=c(A)+c(B); break;
+      case 'inter': shade=`<g ${clip('a',A)}>${c(B)}</g>`; break;
+      case 'diff': shade=c(A,mask('b',blk(B))); break;
+      case 'comp': shade=RECT(mask('a',blk(A))); break;
+      case 'compU': shade=RECT(mask('ab',blk(A)+blk(B))); break;
+      case 'interC': {const cl=clip('a',A); shade=RECT(mask('i',`<g ${cl}>${blk(B)}</g>`));} break;
+      case 'sym': shade=c(A,mask('b',blk(B)))+c(B,mask('a',blk(A))); break;
+      case 'regions': extra=`<text x="60" y="77">①</text><text x="103" y="77">②</text><text x="146" y="77">③</text><text x="186" y="122">④</text>`; break;
+      case 'subset': IN('A','B'); shade=c(A); break;
+      case 'disjoint': A={cx:65,cy:72,r:36,l:'A',lx:30,ly:40}; B={cx:155,cy:72,r:36,l:'B',lx:182,ly:40}; cs=[A,B]; break;
+      case 'three': T3(); break;
+      case 'dist': {const C=T3(); shade=`<g ${clip('a',A)}>${c(B)}${c(C)}</g>`;} break;
+      case 'truth': A={cx:105,cy:72,r:42,l:'P',lx:66,ly:38}; cs=[A]; shade=c(A); break;
+      case 'neg': A={cx:105,cy:72,r:42,l:'P',lx:66,ly:38}; cs=[A]; shade=RECT(mask('a',blk(A))); extra=`<text class="i r" x="176" y="120">Pᶜ</text>`; break;
+      case 'allU': cs=[]; shade=RECT(); extra=`<text class="i" x="110" y="78" text-anchor="middle">P = U</text>`; break;
+      case 'some': A={cx:110,cy:72,r:20,l:'P',lx:84,ly:50}; cs=[A]; shade=c(A); extra=`<text class="s" x="110" y="76" text-anchor="middle">≠∅</text>`; break;
+      case 'pq': IN('P','Q'); shade=c(A); break;
+      case 'suff': IN('P','Q'); shade=c(A); extra=`<text class="s r" x="96" y="94" text-anchor="middle">충분</text><text class="s" x="146" y="108" text-anchor="middle">필요</text>`; break;
+      case 'pqno': A.l='P'; B.l='Q'; shade=c(A,mask('b',blk(B))); extra=`<text class="s r" x="66" y="76" text-anchor="middle">반례</text>`; break;
+      case 'chain': A={cx:88,cy:84,r:18,l:'P',lx:84,ly:88,cls:'r'}; B={cx:100,cy:78,r:36,l:'Q',lx:112,ly:62}; {const R={cx:112,cy:72,r:56,l:'R',lx:154,ly:36}; cs=[A,B,R];} shade=c(A); break;
+      case 'suff2': IN('P','Q'); shade=c(A); break;
+      case 'nec': IN('Q','P'); A.cls=''; shade=c(A); break;
+      case 'none': A.l='P'; B.l='Q'; break;
+      case 'eq': A={cx:110,cy:72,r:44,l:'P = Q',lx:88,ly:76,cls:'r'}; cs=[A]; shade=c(A); break;
+      case 'ex': B={cx:108,cy:72,r:52,l:'Q',lx:150,ly:34}; A={cx:130,cy:72,r:18,l:'P',lx:144,ly:98,cls:'r'}; cs=[A,B]; shade=c(A); extra=`<text x="76" y="77">−1</text><text x="126" y="77">1</text>`; break;
+    }
+    return `<svg viewBox="0 0 220 140" role="img"><defs>${defs}</defs>
+      <g class="fs">${shade}</g>
+      <rect class="ax" x="10" y="10" width="200" height="120"/>
+      ${cs.map(o=>`<circle class="ln" cx="${o.cx}" cy="${o.cy}" r="${o.r}"/>`).join('')}
+      <text class="i s" x="16" y="26">U</text>
+      ${cs.map(o=>`<text class="i ${o.cls||''}" x="${o.lx}" y="${o.ly}">${o.l}</text>`).join('')}
+      ${extra}</svg>`;
+  }
+  document.querySelectorAll('.venn').forEach(f=>{
+    f.innerHTML=build(f.dataset.v)+`<figcaption>${f.dataset.cap.replace(/\b([A-Z])\b/g,'<i>$1</i>')}</figcaption>`;
+    f.querySelector('svg').setAttribute('aria-label','벤다이어그램 '+f.dataset.cap);
+  });
+})();
+
+/* ---------- Transformation lab ---------- */
+
+(function(){
+  const svgEl=document.getElementById('plane');
+  const S=20, O=140, X='<i>x</i>', Y='<i>y</i>', M='−';
+  const px=x=>O+x*S, py=y=>O-y*S;
+  const st={shape:'circle',op:'tr',a:3,b:-2};
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let grid='';
+  for(let i=-7;i<=7;i++){
+    grid+=`<line class="gl" x1="${px(i)}" y1="0" x2="${px(i)}" y2="280"/><line class="gl" x1="0" y1="${py(i)}" x2="280" y2="${py(i)}"/>`;
+  }
+  grid+=`<line class="ax" x1="0" y1="${O}" x2="280" y2="${O}"/><line class="ax" x1="${O}" y1="0" x2="${O}" y2="280"/>`;
+  grid+=`<text class="i s" x="268" y="${O-5}">x</text><text class="i s" x="${O+5}" y="12">y</text><text class="i s" x="${O-12}" y="${O+13}">O</text>`;
+  for(const i of [-5,5]){grid+=`<text class="s" x="${px(i)-4}" y="${O+13}">${i<0?'−5':'5'}</text><text class="s" x="${O+4}" y="${py(i)+4}">${i<0?'−5':'5'}</text>`;}
+
+  const T={
+    tr:(x,y)=>[x+st.a,y+st.b], xa:(x,y)=>[x,-y], ya:(x,y)=>[-x,y], o:(x,y)=>[-x,-y], yx:(x,y)=>[y,x]
+  };
+  const c0=[2,1], R=2;
+  const L1=[-8,-15], L2=[8,17], LP=[0,1];   // y = 2x + 1
+  const lerp=(p,q,t)=>[p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t];
+
+  function draw(t){
+    const f=T[st.op];
+    let h=grid;
+    if(st.op==='yx') h+=`<line class="ax dash" x1="${px(-7)}" y1="${py(-7)}" x2="${px(7)}" y2="${py(7)}"/><text class="s i" x="${px(5.2)}" y="${py(6.2)}">y = x</text>`;
+    if(st.shape==='circle'){
+      const c=lerp(c0,f(...c0),t);
+      h+=`<circle class="ln dash" cx="${px(c0[0])}" cy="${py(c0[1])}" r="${R*S}"/><circle class="dot" cx="${px(c0[0])}" cy="${py(c0[1])}" r="3"/>`;
+      h+=`<line class="ax dash" x1="${px(c0[0])}" y1="${py(c0[1])}" x2="${px(c[0])}" y2="${py(c[1])}"/>`;
+      h+=`<circle class="ac" cx="${px(c[0])}" cy="${py(c[1])}" r="${R*S}"/><circle class="dotr" cx="${px(c[0])}" cy="${py(c[1])}" r="4"/>`;
+    }else{
+      const a=lerp(L1,f(...L1),t), b=lerp(L2,f(...L2),t), p=lerp(LP,f(...LP),t);
+      h+=`<line class="ln dash" x1="${px(L1[0])}" y1="${py(L1[1])}" x2="${px(L2[0])}" y2="${py(L2[1])}"/><circle class="dot" cx="${px(LP[0])}" cy="${py(LP[1])}" r="3"/>`;
+      h+=`<line class="ax dash" x1="${px(LP[0])}" y1="${py(LP[1])}" x2="${px(p[0])}" y2="${py(p[1])}"/>`;
+      h+=`<line class="ac" x1="${px(a[0])}" y1="${py(a[1])}" x2="${px(b[0])}" y2="${py(b[1])}"/><circle class="dotr" cx="${px(p[0])}" cy="${py(p[1])}" r="4"/>`;
+    }
+    svgEl.innerHTML=h;
+  }
+
+  // formatting helpers
+  const frac=(n,d)=>`<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+  function fmt(v){const n=Math.round(v*2);if(n%2===0){const k=n/2;return (k<0?M:'')+Math.abs(k);}return (n<0?M:'')+frac(Math.abs(n),2);}
+  const shift=(v,a)=>a===0?v:(a>0?`${v} ${M} ${a}`:`${v} + ${-a}`);
+  const sq=(v,c)=>c===0?`${v}<sup>2</sup>`:`(${shift(v,c)})<sup>2</sup>`;
+  const circEq=(cx,cy)=>`${sq(X,cx)} + ${sq(Y,cy)} = 4`;
+  function lineEq(p,q){
+    const m=(q[1]-p[1])/(q[0]-p[0]), k=p[1]-m*p[0];
+    let s=`${Y} = `+(m===1?X:m===-1?M+X:fmt(m)+X);
+    if(Math.abs(k)>1e-9) s+= k>0?` + ${fmt(k)}`:` ${M} ${fmt(-k)}`;
+    return s;
+  }
+  const pt=p=>`(${fmt(p[0])}, ${fmt(p[1])})`;
+
+  function text(){
+    const f=T[st.op], a=st.a, b=st.b, circ=st.shape==='circle';
+    const rules={
+      tr:`${X} 대신 ${X} ${M} <i>a</i>, ${Y} 대신 ${Y} ${M} <i>b</i>`,
+      xa:`${Y} 대신 ${M}${Y}`, ya:`${X} 대신 ${M}${X}`,
+      o:`${X} 대신 ${M}${X}, ${Y} 대신 ${M}${Y}`, yx:`${X}와 ${Y}를 서로 바꾸기`
+    };
+    const subC={
+      tr:`(${shift(X,a)} ${M} 2)<sup>2</sup> + (${shift(Y,b)} ${M} 1)<sup>2</sup> = 4`,
+      xa:`(${X} ${M} 2)<sup>2</sup> + (${M}${Y} ${M} 1)<sup>2</sup> = 4`,
+      ya:`(${M}${X} ${M} 2)<sup>2</sup> + (${Y} ${M} 1)<sup>2</sup> = 4`,
+      o:`(${M}${X} ${M} 2)<sup>2</sup> + (${M}${Y} ${M} 1)<sup>2</sup> = 4`,
+      yx:`(${Y} ${M} 2)<sup>2</sup> + (${X} ${M} 1)<sup>2</sup> = 4`
+    };
+    const subL={
+      tr:`${shift(Y,b)} = ${a===0?'2'+X:'2('+shift(X,a)+')'} + 1`,
+      xa:`${M}${Y} = 2${X} + 1`, ya:`${Y} = 2(${M}${X}) + 1`,
+      o:`${M}${Y} = 2(${M}${X}) + 1`, yx:`${X} = 2${Y} + 1`
+    };
+    document.getElementById('e0').innerHTML= circ? circEq(2,1) : `${Y} = 2${X} + 1`;
+    document.getElementById('e1').innerHTML= rules[st.op];
+    document.getElementById('e2').innerHTML= circ? subC[st.op] : subL[st.op];
+    document.getElementById('e3').innerHTML= circ? circEq(...f(...c0)) : lineEq(f(...L1),f(...L2));
+    document.getElementById('e4').innerHTML= (circ?'중심 ':'점 ')+pt(circ?c0:LP)+' → <span class="res">'+pt(f(...(circ?c0:LP)))+'</span>';
+  }
+
+  let raf=null;
+  function play(){
+    cancelAnimationFrame(raf);
+    if(reduce){draw(1);return;}
+    const t0=performance.now(), dur=1100;
+    draw(0);
+    const step=now=>{
+      let t=Math.min(1,(now-t0-250)/dur); if(t<0)t=0;
+      const e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+      draw(e);
+      if(t<1) raf=requestAnimationFrame(step);
+    };
+    raf=requestAnimationFrame(step);
+  }
+  function refresh(anim){
+    document.getElementById('sliders').style.display= st.op==='tr'?'grid':'none';
+    text(); anim?play():draw(1);
+  }
+  function group(elId,key){
+    document.getElementById(elId).addEventListener('click',e=>{
+      const btn=e.target.closest('button'); if(!btn) return;
+      st[key]=btn.dataset[key];
+      document.querySelectorAll('#'+elId+' button').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));
+      refresh(true);
+    });
+  }
+  group('shapeCtl','shape'); group('opCtl','op');
+  const sa=document.getElementById('sa'), sb=document.getElementById('sb');
+  const show=v=>v<0?M+(-v):String(v);
+  sa.addEventListener('input',()=>{st.a=+sa.value;document.getElementById('oa').textContent=show(st.a);refresh(false);});
+  sb.addEventListener('input',()=>{st.b=+sb.value;document.getElementById('ob').textContent=show(st.b);refresh(false);});
+  document.getElementById('replay').addEventListener('click',()=>play());
+  refresh(true);
+})();
+</script>
+</body>
+</html>
